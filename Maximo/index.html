@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maximo KT Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Maximo KT</div>
+
+    <ul>
+      <li onclick="loadServers()">🖥 Server & DB Details</li>
+      <li onclick="loadSupport()">⚙ Vendor Support</li>
+      <li onclick="loadServerSide()">⚙ Server Side Support</li>
+      <!--<li onclick="loadARO()">📊 ARO Modules</li>
+      <li onclick="loadCore()">🏢 Maximo Core</li>-->
+      <li onclick="loadManage()">🛠 Manage Manage</li>
+      <li onclick="loadMobile()">📱 Maximo Mobile</li>
+      <li onclick="loadCustomizations()">🧩 Customizations</li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    
+    <section id="content" class="content-area"></section>
+    
+  </main>
+
+</div>
+
+<script src="js/data-servers.js"></script>
+<script src="js/data-support.js"></script>
+<script src="js/data-server-side.js"></script>
+<script src="js/data-aro.js"></script>
+<script src="js/data-core.js"></script>
+<script src="js/data-mobile.js"></script>
+<script src="js/data-manage.js"></script>
+<script src="js/data-customizations.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

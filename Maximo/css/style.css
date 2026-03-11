@@ -1,0 +1,857 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f5f7fa;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #0f172a, #1e293b);
+  color: white;
+  padding: 25px 15px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 12px 16px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(4px);
+}
+
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background: white;
+  padding: 16px 30px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-weight: 600;
+}
+
+.env-badge {
+  background: #2563eb;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.content-area {
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* Section Cards */
+.section-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.sub-title {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #64748b;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th {
+  background: #1e293b;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background: #f1f5f9;
+}
+
+/* Grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* Image Placeholder */
+.image-box {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.image-box img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+
+
+
+
+.env-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.env-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  background: #e2e8f0;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.env-btn:hover {
+  background: #cbd5e1;
+}
+
+.env-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+.env-card {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+
+
+/* ===============================
+   GLOBAL RESET
+================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f5f7fa;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+/* ===============================
+   SECTION CARD
+================================= */
+.section-card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  margin-bottom: 28px;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   VENDOR INTERNAL TABS
+================================= */
+.vendor-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.vendor-btn {
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: #e2e8f0;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.vendor-btn:hover {
+  background: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.vendor-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+}
+
+/* ===============================
+   HEADINGS
+================================= */
+h2 {
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 18px 0 10px;
+  color: #0f172a;
+}
+
+/* ===============================
+   TABLE STYLING
+================================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+th {
+  background: #1e293b;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #f1f5f9;
+}
+
+/* ===============================
+   LISTS
+================================= */
+ul {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+/* ===============================
+   WARNING & NOTE BOXES
+================================= */
+.warning-box {
+  background: #fee2e2;
+  border-left: 5px solid #dc2626;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.note-box {
+  background: #f1f5f9;
+  border-left: 5px solid #64748b;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.highlight-box {
+  background: #e0f2fe;
+  border-left: 5px solid #0284c7;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* ===============================
+   IMAGE CONTAINER
+================================= */
+.image-box {
+  margin: 15px 0 20px;
+  text-align: center;
+}
+
+.image-box img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* ===============================
+   LINKS
+================================= */
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   HORIZONTAL RULE
+================================= */
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 24px 0;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+  .section-card {
+    padding: 18px;
+  }
+
+  th, td {
+    font-size: 13px;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+}
+
+/* ===============================
+   ANIMATION
+================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+.section-card h2 {
+  margin-bottom: 15px;
+}
+
+.inner-layout {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.inner-nav {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inner-nav-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #e2e8f0;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.inner-nav-btn:hover {
+  background: #cbd5e1;
+}
+
+.inner-nav-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+.inner-content {
+  flex: 1;
+}
+
+.code-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: Consolas, monospace;
+  font-size: 13px;
+  margin: 15px 0;
+  overflow-x: auto;
+}
+
+/* ============================================================
+   MAXIMO MANAGE KT – UI STYLING
+============================================================ */
+
+/* Wrapper */
+.server-side-wrapper {
+    background: #f8fafc;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.server-side-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.server-side-header p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+/* Body Layout */
+.server-side-body {
+    display: flex;
+    gap: 25px;
+}
+
+/* ============================================================
+   LEFT NAVIGATION
+============================================================ */
+
+.server-side-nav {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.server-side-nav button {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #e2e8f0;
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+}
+
+.server-side-nav button:hover {
+    background: #cbd5e1;
+    transform: translateX(4px);
+}
+
+.server-side-nav button.active-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+/* ============================================================
+   RIGHT CONTENT AREA
+============================================================ */
+
+.server-side-content {
+    flex: 1;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.server-side-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+
+/* ============================================================
+   INFO CARD
+============================================================ */
+
+.info-card {
+    background: #f1f5f9;
+    padding: 16px 18px;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ============================================================
+   TABLE STYLING
+============================================================ */
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.styled-table th {
+    background: #1e293b;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+}
+
+.styled-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.styled-table tr:hover {
+    background: #f1f5f9;
+}
+
+/* ============================================================
+   LIST STYLING
+============================================================ */
+
+.server-side-content ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.server-side-content ul li {
+    margin-bottom: 6px;
+}
+
+/* ============================================================
+   ANIMATION
+============================================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+============================================================ */
+
+@media (max-width: 1024px) {
+
+    .server-side-body {
+        flex-direction: column;
+    }
+
+    .server-side-nav {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .server-side-nav button {
+        flex: 1 1 45%;
+    }
+}
+
+
+/* ============================================================
+   MAXIMO MANAGE – AUTOMATION SCRIPT KT STYLING
+   Enterprise Documentation UI
+============================================================ */
+
+/* Section Wrapper Enhancements */
+.server-side-content {
+    padding: 25px 35px;
+    background: #ffffff;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+/* Main Headings */
+.server-side-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+/* Section Headers */
+.server-side-content h4 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    color: #0f172a;
+    padding-left: 10px;
+    border-left: 4px solid #2563eb;
+}
+
+/* Sub Headers */
+.server-side-content h5,
+.server-side-content h6 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Paragraph */
+.server-side-content p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 12px;
+}
+
+/* Lists */
+.server-side-content ul {
+    margin-left: 18px;
+    margin-bottom: 15px;
+}
+
+.server-side-content ul li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+/* Info Card */
+.info-card {
+    background: #f8fafc;
+    border-left: 5px solid #2563eb;
+    padding: 18px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Highlight Box */
+.highlight-box {
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 15px 0;
+    color: #1e3a8a;
+    font-weight: 500;
+}
+
+/* ============================================================
+   TABLE STYLING
+============================================================ */
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 13px;
+}
+
+.styled-table thead tr {
+    background-color: #1e293b;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+.styled-table th {
+    background: #1e293b;
+    color: #fff;
+    font-weight: 600;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.styled-table tr:hover {
+    background-color: #e2e8f0;
+    transition: 0.2s ease;
+}
+
+/* Make tables scrollable if too wide */
+.server-side-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   CODE BLOCK STYLING
+============================================================ */
+
+.code-block {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 15px;
+    border-radius: 6px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    margin: 15px 0;
+    line-height: 1.5;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* Inline Code */
+.server-side-content code {
+    background: #e2e8f0;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+}
+
+/* ============================================================
+   SECTION SPACING CONTROL
+============================================================ */
+
+.kt-section {
+    margin-bottom: 30px;
+}
+
+.kt-subsection {
+    margin-bottom: 18px;
+}
+
+/* ============================================================
+   SCROLLBAR POLISH (Optional)
+============================================================ */
+
+.server-side-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.server-side-content::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 4px;
+}
+
+.server-side-content::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENT
+============================================================ */
+
+@media (max-width: 1024px) {
+    .server-side-content {
+        padding: 20px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        font-size: 12px;
+    }
+}
+
+/* ==============================
+   FLOW CHART STYLING
+============================== */
+
+.flow-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.flow-box {
+    background: #1f3c88;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 5px 0;
+    min-width: 220px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.flow-arrow {
+    font-size: 22px;
+    color: #444;
+    margin: 2px 0;
+}
+
+.final-status {
+    background: #2e7d32;
+}
