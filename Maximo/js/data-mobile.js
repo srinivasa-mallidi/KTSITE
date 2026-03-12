@@ -826,7 +826,7 @@ This page acts as the main landing screen for all inventory operations.
 <div class="image-box">
    <img src="assets/images/mit3.png">
 </div>
-</td></td>
+</td>
 </tr>
 
 <tr>
@@ -836,7 +836,7 @@ This page acts as the main landing screen for all inventory operations.
 <div class="image-box">
    <img src="assets/images/mit4.png">
 </div>
-</td></td>
+</td>
 </tr>
 
 <tr>
@@ -846,11 +846,11 @@ This page acts as the main landing screen for all inventory operations.
 <div class="image-box">
    <img src="assets/images/mit5.png">
 </div>
-</td></br>
+</br>
 <div class="image-box">
    <img src="assets/images/mit6.png">
 </div>
-</td></td>
+</td>
 </tr>
 
 <tr>
@@ -864,7 +864,7 @@ This page acts as the main landing screen for all inventory operations.
 </div>
 </td>
 </div>
-</td></td>
+</td>
 </tr>
 
 <tr>
@@ -874,7 +874,7 @@ This page acts as the main landing screen for all inventory operations.
 <div class="image-box">
    <img src="assets/images/mit9.png">
 </div>
-</td></td>
+</td>
 </tr>
 
 <tr>
@@ -1522,17 +1522,6 @@ ensure accuracy before updating stock balances.
 </tr>
 
 <tr>
-<td>adHoc</td>
-<td>AdHocPageController</td>
-<td>Stage 1 Counting Page
-</br>
-<div class="image-box">
-   <img src="assets/images/mic3.png">
-</div>
-</td>
-</tr>
-
-<tr>
 <td>Stage1SubMenu</td>
 <td>Stage1SubMenuController</td>
 <td>Dataset selection for Stage 1 counting
@@ -1544,21 +1533,46 @@ ensure accuracy before updating stock balances.
 </tr>
 
 <tr>
+<td>adHoc</td>
+<td>AdHocPageController</td>
+<td>Stage 1 Counting Page
+</br>
+<div class="image-box">
+   <img src="assets/images/mic3.png">
+</div>
+</td>
+</tr>
+
+
+
+<tr>
 <td>Stage2SubMenu</td>
 <td>Stage2SubMenuController</td>
-<td>Dataset selection for Stage 2 counting</td>
+<td>Dataset selection for Stage 2 counting</br>
+<div class="image-box">
+   <img src="assets/images/mic4.png">
+</div>
+</td>
 </tr>
 
 <tr>
 <td>adHocB</td>
 <td>AdHocPageControllerB</td>
-<td>Stage 2 Counting Page</td>
+<td>Stage 2 Counting Page</br>
+<div class="image-box">
+   <img src="assets/images/mic5.png">
+</div>
+</td>
 </tr>
 
 <tr>
 <td>adHocC</td>
 <td>AdHocPageControllerC</td>
-<td>Stage 3 Counting Page</td>
+<td>Stage 3 Counting Page</br>
+<div class="image-box">
+   <img src="assets/images/mic6.png">
+</div>
+</td>
 </tr>
 
 <tr>
@@ -1761,7 +1775,7 @@ Work Requests, Work Orders, Failure Reporting, Labor, Attachments and Work Logs.
 before accessing work orders.</p>
 
 <pre class="code-block">
-Environment URL
+Test Environment URL
 https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 </pre>
 
@@ -1800,6 +1814,10 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 <li>Enter required information.</li>
 <li>Click <b>Save</b>.</li>
 </ol>
+
+<div class="image-box">
+   <img src="assets/images/smit2.png">
+</div>
 
 
 <h4>Mandatory Fields for Work Request</h4>
@@ -1851,6 +1869,15 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 </tr>
 
 </table>
+
+<div class="image-box">
+   <img src="assets/images/smit3.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit4.png">
+</div>
+
 
 
 <h4>Long Description Structure</h4>
@@ -1933,6 +1960,27 @@ CLOSE
 
 <h4>Technician Work Order Features</h4>
 
+<div class="image-box">
+   <img src="assets/images/smit1.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit5.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit6.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit7.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit8.png">
+</div>
+
+
 <table class="styled-table">
 <tr>
 <th>Feature</th>
@@ -1946,7 +1994,15 @@ CLOSE
 
 <tr>
 <td>Work Logs</td>
-<td>Add technician notes</td>
+<td>Add technician notes
+</br>
+<div class="image-box">
+   <img src="assets/images/smit19.png">
+</div></br>
+<div class="image-box">
+   <img src="assets/images/smit20.png">
+</div>
+</td>
 </tr>
 
 <tr>
@@ -1966,8 +2022,24 @@ CLOSE
 
 <tr>
 <td>Tasks</td>
-<td>View associated job plan tasks</td>
+<td>View associated job plan tasks
+</br>
+<div class="image-box">
+   <img src="assets/images/smit18.png">
+</div>
+</td>
 </tr>
+
+<tr>
+<td>Materials and tools</td>
+<td>View Planned Material , Tools, Labor 
+</br>
+<div class="image-box">
+   <img src="assets/images/smit17.png">
+</div>
+</td>
+</tr>
+
 
 </table>
 
@@ -1990,6 +2062,14 @@ Technicians must report failure details for corrective maintenance activities.
 <li>Remedy Note</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit9.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit10.png">
+</div>
+
 
 <h4>Labor Reporting</h4>
 
@@ -2003,6 +2083,10 @@ Technicians must report failure details for corrective maintenance activities.
 <li>End Time</li>
 <li>Hours Worked</li>
 </ul>
+
+<div class="image-box">
+   <img src="assets/images/smit11.png">
+</div>
 
 
 <h4>Attachment Handling</h4>
@@ -2024,6 +2108,18 @@ Technicians must report failure details for corrective maintenance activities.
 <li>Maximo Web Application</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit12.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit13.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit14.png">
+</div>
+
 
 <h4>Work Order Completion</h4>
 
@@ -2037,6 +2133,9 @@ Click "Complete Work Order"
 Status changes to TCOMP
 </pre>
 
+<div class="image-box">
+   <img src="assets/images/smit15.png">
+</div>
 
 <h4>Work Order Queries</h4>
 
@@ -2049,6 +2148,11 @@ Status changes to TCOMP
 <li>Completed Work Orders</li>
 <li>Created By Me</li>
 </ul>
+
+<div class="image-box">
+   <img src="assets/images/smit16.png">
+</div>
+
 
 
 <h4>Search & Filter Options</h4>
@@ -2141,7 +2245,7 @@ issuing additional items, and viewing inventory and bin details.
 <p>Technicians must connect the mobile application to the STTL environment.</p>
 
 <pre class="code-block">
-Environment URL
+Test Environment URL
 
 https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 </pre>
@@ -2448,7 +2552,7 @@ incorrect receipt transactions.
 <p>Users must connect the mobile application to the STTL environment.</p>
 
 <pre class="code-block">
-Environment URL
+Test Environment URL
 
 https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 </pre>
@@ -2703,7 +2807,7 @@ and saving physical counts to synchronize with Maximo Manage.
 <p>Users must connect the mobile application to the STTL environment.</p>
 
 <pre class="code-block">
-Environment URL
+Test Environment URL
 
 https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 </pre>
