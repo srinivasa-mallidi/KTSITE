@@ -2318,12 +2318,12 @@ After login, users can access mobile applications through the
 
 <p>This section allows technicians to check inventory data.</p>
 
-<h5>View Item Details</h5>
 
 <div class="image-box">
    <img src="assets/images/smit23.png">
 </div>
 
+<h5>View Item Details</h5>
 
 <p>The following item information is displayed:</p>
 
@@ -2578,63 +2578,37 @@ Return Items allow technicians to Return the Items that are issued against worko
 
 
 
-<h4>Inventory Usage Creation</h4>
+<h4>Transfer Reserved Items</h4>
 
 <p>
-Both Reserved and Additional Item Issues create an
-<b>Inventory Usage</b> transaction in Maximo.
+Transfering Reserved Items from Internal PO 
 </p>
 
-<pre class="code-block">
-Select Item
-   ↓
-Create Inventory Usage
-   ↓
-Enter Quantity
-   ↓
-Select Bin
-   ↓
-Save
-</pre>
+<div class="image-box">
+   <img src="assets/images/smit38.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit39.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit40.png">
+</div>
 
 
-<h4>Common Actions</h4>
+<p><b>Steps:</b></p>
 
-<table class="styled-table">
-<tr>
-<th>Action</th>
-<th>Description</th>
-</tr>
-
-<tr>
-<td>Search</td>
-<td>Search inventory records</td>
-</tr>
-
-<tr>
-<td>Refresh</td>
-<td>Reload latest inventory data</td>
-</tr>
-
-<tr>
-<td>Select</td>
-<td>Select items to issue</td>
-</tr>
-
-<tr>
-<td>Delete</td>
-<td>Remove selected items from transaction</td>
-</tr>
-
-<tr>
-<td>Split Item</td>
-<td>Split item quantity across multiple bins</td>
-</tr>
-
-</table>
-
-
-
+<ol>
+<li>Select <b>Transfe Reserved Items</b>.</li>
+<li>Choose items from the Internal PO list.</li>
+<li>Click <b>TransferOut</b> Button at top.</li>
+<li>Open <b>Create Inventory Usage</b> page.</li>
+<li>Adjust quantity if required.</li>
+<li>Select FromBin, To Storeroom, ToBin details.</li>
+<li>Save the transaction.</li>
+<li>TransferOut the transaction.</li>
+</ol>
 
 `;
 }
@@ -2692,6 +2666,10 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 <li>Select the <b>Inventory Receiving</b> tile.</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit21.png">
+</div>
+
 
 <h4>Open Purchase Orders</h4>
 
@@ -2699,6 +2677,9 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 After opening the application, the system displays a list of
 <b>Open Purchase Orders</b>.
 </p>
+<div class="image-box">
+   <img src="assets/images/smit41.png">
+</div>
 
 <p>The following information is displayed:</p>
 
@@ -2739,8 +2720,21 @@ After opening the application, the system displays a list of
 <td>Cancel incorrect receipt transactions</td>
 </tr>
 
+<tr>
+<td>Attachments</td>
+<td>Users can take a photo of the item while receving and attach it to PO record
+</br>
+<div class="image-box">
+   <img src="assets/images/smit43.png">
+</div>
+</td>
+</tr>
+
 </table>
 
+<div class="image-box">
+   <img src="assets/images/smit42.png">
+</div>
 
 <h4>Search & Refresh Options</h4>
 
@@ -2771,28 +2765,11 @@ After opening the application, the system displays a list of
 <li>Save the transaction.</li>
 </ol>
 
-
-<h5>Displayed Fields</h5>
-
-<ul>
-<li>Item Number</li>
-<li>Item Description</li>
-<li>Ordered Quantity</li>
-<li>Due Quantity</li>
-<li>Storeroom</li>
-<li>To Bin</li>
-<li>Vendor</li>
-</ul>
+<div class="image-box">
+   <img src="assets/images/smit44.png">
+</div>
 
 
-<h5>Editable Fields</h5>
-
-<ul>
-<li>Packing Slip Number</li>
-<li>Comments</li>
-<li>Due Quantity</li>
-<li>To Bin</li>
-</ul>
 
 
 <h4>Return Items</h4>
@@ -2812,6 +2789,9 @@ to the vendor.
 <li>Save the transaction.</li>
 </ol>
 
+<div class="image-box">
+   <img src="assets/images/smit45.png">
+</div>
 
 <h5>Return Details</h5>
 
@@ -2844,6 +2824,9 @@ The Receipts page displays previously received items.
 <li>Date and Time</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit46.png">
+</div>
 
 <h4>Void Transactions</h4>
 
@@ -2860,37 +2843,116 @@ The Void option cancels receipt transactions that were created incorrectly.
 <li>Click <b>Save</b>.</li>
 </ol>
 
+<div class="image-box">
+   <img src="assets/images/smit47.png">
+</div>
+
 <p>
 This action reverses the receipt transaction in Maximo.
 </p>
 
 
-<h4>Receiving Workflow</h4>
-
-<pre class="code-block">
-Open Purchase Order
-      ↓
-Select Receive
-      ↓
-Enter Quantity
-      ↓
-Enter Packing Slip
-      ↓
-Select To Bin
-      ↓
-Save Transaction
-</pre>
-
-
-<h4>Important Notes</h4>
+<h4>Shipment Receiving - Transfer In</h4>
 
 <ul>
-<li>Receiving transactions update Maximo inventory balances.</li>
-<li>Packing Slip number is required for tracking vendor deliveries.</li>
-<li>Return option reduces received quantity and creates return transaction.</li>
-<li>Void option cancels receipt transactions entirely.</li>
-<li>Search and refresh options help retrieve updated PO records.</li>
+<li>For the Items Transfered Out from "Transfer Reserver Items" Functionality in Issues & Transfer App, System will create Shipment Records. </li>
+<li>We use these Shipment Records to perform Transfer In.</li>
 </ul>
+
+<div class="image-box">
+   <img src="assets/images/smit48.png">
+</div>
+
+
+<h4>Open Shipment Receiving</h4>
+
+<p>
+After opening the application, the system displays a list of
+<b>Open Shipment Records</b>.
+</p>
+<div class="image-box">
+   <img src="assets/images/smit49.png">
+</div>
+
+<p>The following information is displayed:</p>
+
+<ul>
+<li>Shipment Number</li>
+<li>Shipment Date</li>
+<li>From Site</li>
+<li>Shipped By</li>
+<li>Shipment Lines</li>
+</ul>
+
+
+<h4>Available Operations</h4>
+
+<table class="styled-table">
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Receive</td>
+<td>Receive items from the Shipment Record</td>
+</tr>
+
+<tr>
+<td>Return</td>
+<td>Return received items (Not used much)</td>
+</tr>
+
+<tr>
+<td>Receipts</td>
+<td>View receipt transaction history</td>
+</tr>
+
+<tr>
+<td>Void</td>
+<td>Cancel incorrect receipt transactions (Not used much) </td>
+</tr>
+
+</table>
+
+<div class="image-box">
+   <img src="assets/images/smit50.png">
+</div>
+
+<h4>Search & Refresh Options</h4>
+
+<p>Users can search Shipment Records using the search bar.</p>
+
+<p>Search parameters include:</p>
+
+<ul>
+<li>Shipment Number</li>
+</ul>
+
+<p>The <b>Check for Updates</b> icon refreshes the latest records from the server.</p>
+
+
+<h4>Receive</h4>
+
+<p>This function allows users to receive items for a Shipment Record.</p>
+
+<p><b>Steps:</b></p>
+
+<ol>
+<li>Select the Shipment Record.</li>
+<li>Click <b>Receive</b>.</li>
+<li>Select the item to receive.</li>
+<li>Edit the necessary fields.</li>
+<li>Save the transaction.</li>
+</ol>
+
+<div class="image-box">
+   <img src="assets/images/smit51.png">
+</div>
+<div class="image-box">
+   <img src="assets/images/smit52.png">
+</div>
+
 
 `;
 }
@@ -2947,6 +3009,9 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 <li>Select the <b>Inventory Counting</b> tile.</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit21.png">
+</div>
 
 <h4>Main Counting Options</h4>
 
@@ -2960,26 +3025,28 @@ https://sttltest1.home.sttltest1.apps.sttltest.maximo.shell.com/
 <td>Ad Hoc Count</td>
 <td>Perform manual inventory counting</td>
 </tr>
-
-<tr>
-<td>In Progress</td>
-<td>Displays items currently being counted</td>
-</tr>
-
-<tr>
-<td>Counted</td>
-<td>Displays items already counted</td>
-</tr>
-
 </table>
 
 
 <h4>Ad Hoc Counting</h4>
 
+<div class="image-box">
+   <img src="assets/images/smit53.png">
+</div>
+
 <p>
 Ad Hoc counting allows technicians to perform physical counts of items
 directly from mobile devices.
 </p>
+
+<div class="image-box">
+   <img src="assets/images/smit54.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit55.png">
+</div>
+
 
 <p>The following item details are displayed:</p>
 
@@ -2987,11 +3054,12 @@ directly from mobile devices.
 <li>Item Number</li>
 <li>Item Description</li>
 <li>Bin</li>
-<li>Lot Number</li>
 <li>Site</li>
 <li>Storeroom</li>
 <li>Quantity Due</li>
-<li>Physical Count (Editable)</li>
+<li>Current Balance</li>
+<li>Physical Count</li>
+<li>TextBox to update Physical Count (Editable)</li>
 </ul>
 
 
@@ -3073,21 +3141,6 @@ Save Transaction
 </pre>
 
 
-<h4>Updating Physical Count</h4>
-
-<p>
-Technicians enter the physical count quantity for the selected item.
-</p>
-
-<p><b>Steps:</b></p>
-
-<ol>
-<li>Select the item.</li>
-<li>Enter the physical count value.</li>
-<li>Move the item to <b>Counted</b>.</li>
-<li>Click <b>Save</b>.</li>
-</ol>
-
 
 <h4>Save Confirmation</h4>
 
@@ -3096,35 +3149,6 @@ Technicians enter the physical count quantity for the selected item.
 <pre class="code-block">
 "Item Physical Count is saved"
 </pre>
-
-
-<h4>Counting Workflow Integration</h4>
-
-<p>
-Inventory counting transactions synchronize with Maximo Manage and update
-inventory accuracy.
-</p>
-
-<pre class="code-block">
-Mobile Inventory Count
-        ↓
-Save Physical Quantity
-        ↓
-Update Maximo Inventory Balance
-        ↓
-Inventory Reconciliation
-</pre>
-
-
-<h4>Important Notes</h4>
-
-<ul>
-<li>Physical count field is editable during counting.</li>
-<li>Filter and sort options help locate items quickly.</li>
-<li>Items move from <b>In Progress</b> to <b>Counted</b> once quantity is entered.</li>
-<li>Saved counts synchronize with Maximo Manage.</li>
-<li>This process improves inventory accuracy and stock verification.</li>
-</ul>
 
 `;
 }
