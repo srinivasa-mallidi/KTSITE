@@ -2274,6 +2274,10 @@ After login, users can access mobile applications through the
 </ul>
 
 
+<div class="image-box">
+   <img src="assets/images/smit21.png">
+</div>
+
 <h4>Main Menu Options</h4>
 
 <table class="styled-table">
@@ -2293,11 +2297,21 @@ After login, users can access mobile applications through the
 </tr>
 
 <tr>
-<td>Issue Additional Items</td>
-<td>Issue items not originally reserved</td>
+<td>Inventory Usage</td>
+<td>Issue Additional Items, Transfer Items, Return Items</td>
+</tr>
+
+<tr>
+<td>Transfer Reserved Items</td>
+<td>View the Item details of Internal PO</td>
 </tr>
 
 </table>
+
+
+<div class="image-box">
+   <img src="assets/images/smit22.png">
+</div>
 
 
 <h4>View Inventory Details</h4>
@@ -2305,6 +2319,11 @@ After login, users can access mobile applications through the
 <p>This section allows technicians to check inventory data.</p>
 
 <h5>View Item Details</h5>
+
+<div class="image-box">
+   <img src="assets/images/smit23.png">
+</div>
+
 
 <p>The following item information is displayed:</p>
 
@@ -2321,6 +2340,10 @@ After login, users can access mobile applications through the
 <li>Current Total Balance</li>
 </ul>
 
+<div class="image-box">
+   <img src="assets/images/smit24.png">
+</div>
+
 
 <h5>View Bin Details</h5>
 
@@ -2336,6 +2359,10 @@ After login, users can access mobile applications through the
 <li>Physical Count</li>
 <li>Current Total Balance</li>
 </ul>
+
+<div class="image-box">
+   <img src="assets/images/smit25.png">
+</div>
 
 
 <h4>Search & Refresh Options</h4>
@@ -2362,6 +2389,21 @@ After login, users can access mobile applications through the
 Reserved items are materials already allocated to a Work Order.
 Technicians can issue these materials directly using the mobile application.
 </p>
+
+<div class="image-box">
+   <img src="assets/images/smit26.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit27.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit28.png">
+</div>
+
+
+
 
 <p><b>Steps:</b></p>
 
@@ -2430,15 +2472,29 @@ Additional items allow technicians to issue materials that were not
 reserved in advance.
 </p>
 
+<div class="image-box">
+   <img src="assets/images/smit29.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit30.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit31.png">
+</div>
+
+
 <p><b>Steps:</b></p>
 
 <ol>
-<li>Select <b>Issue Additional Items</b>.</li>
+<li>Select <b>Inventory Usage</b>.</li>
 <li>Choose items from the inventory list.</li>
-<li>Click <b>Select Items</b>.</li>
+<li>Click <b>Issue</b> Button at top.</li>
 <li>Open <b>Create Inventory Usage</b> page.</li>
 <li>Adjust quantity if required.</li>
 <li>Save the transaction.</li>
+<li>Issue the transaction.</li>
 </ol>
 
 
@@ -2449,8 +2505,77 @@ reserved in advance.
 <li>Item Description</li>
 <li>Site</li>
 <li>Storeroom</li>
-<li>Current Balance</li>
+<li>Current Balance etc...</li>
 </ul>
+
+
+
+<h4>Transfer Items</h4>
+
+<p>
+Transfer Items allow technicians to transfer materials from storeroom to storeroom & bin to bin.
+</p>
+
+<div class="image-box">
+   <img src="assets/images/smit35.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit36.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit37.png">
+</div>
+
+
+<p><b>Steps:</b></p>
+
+<ol>
+<li>Select <b>Inventory Usage</b>.</li>
+<li>Choose items from the inventory list.</li>
+<li>Click <b>Transfer</b> Button at top.</li>
+<li>Open <b>Create Inventory Usage</b> page.</li>
+<li>Adjust quantity if required.</li>
+<li>Enter the From Bin ,To Storeroom  and To Bin.</li>
+<li>Save the transaction.</li>
+<li>Transfer the transaction.</li>
+</ol>
+
+
+
+<h4>Return Items</h4>
+
+<p>
+Return Items allow technicians to Return the Items that are issued against workorders. 
+</p>
+
+<div class="image-box">
+   <img src="assets/images/smit32.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit33.png">
+</div>
+
+<div class="image-box">
+   <img src="assets/images/smit34.png">
+</div>
+
+
+<p><b>Steps:</b></p>
+
+<ol>
+<li>Select <b>Inventory Usage</b>.</li>
+<li>Choose items from the inventory list.</li>
+<li>Click <b>Return</b> Button at top.</li>
+<li>Open <b>Create Inventory Usage</b> page.</li>
+<li>Adjust quantity if required.</li>
+<li>Select WorkOrder.</li>
+<li>Save the transaction.</li>
+<li>Return the transaction.</li>
+</ol>
+
 
 
 <h4>Inventory Usage Creation</h4>
@@ -2509,15 +2634,7 @@ Save
 </table>
 
 
-<h4>Important Notes</h4>
 
-<ul>
-<li>Inventory issue transactions update Maximo Manage in real time.</li>
-<li>Reserved items are linked to Work Orders.</li>
-<li>Additional items are issued directly from inventory.</li>
-<li>Split functionality allows issuing items from multiple bins.</li>
-<li>Search and refresh options help retrieve updated inventory data.</li>
-</ul>
 
 `;
 }
