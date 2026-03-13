@@ -70,7 +70,7 @@ return `
 
 <p>
 Service Principal (SPN) authentication is used by the ARO cluster to communicate securely with Azure APIs. 
-When the SPN client secret expires or is rotated, the cluster must be updated to avoid authentication failures.
+We need to update the SPN before it expires  to avoid authentication failures.
 </p>
 
 <hr>
@@ -93,10 +93,7 @@ If SPN expires, ARO may fail to scale nodes, manage resources, or authenticate w
 <h3>📌 When is SPN Update Required?</h3>
 
 <ul>
-<li>Client secret expiration</li>
-<li>Secret rotation as per security policy</li>
-<li>Security incident requiring credential reset</li>
-<li>Audit recommendation</li>
+<li>Before SPN secret expiration</li>
 </ul>
 
 <hr>
@@ -106,7 +103,7 @@ If SPN expires, ARO may fail to scale nodes, manage resources, or authenticate w
 <table>
 <tr><th>Role</th><th>Responsibility</th></tr>
 <tr><td>OLM</td><td>Renew SPN client secret</td></tr>
-<tr><td>Support Team</td><td>Prepare az aro update command</td></tr>
+<tr><td>Support Team</td><td>Prepare az aro update command and log Technicial Assistance Ticket with ETSOM</td></tr>
 <tr><td>ETSOM (Anurag Agrawal)</td><td>Execute command from privileged environment</td></tr>
 </table>
 
@@ -151,7 +148,6 @@ az aro update
 
 <h4>Step 4 – Share Command with ETSOM</h4>
 <ul>
-<li>Do NOT execute from unauthorized machine.</li>
 <li>Share command securely.</li>
 <li>Confirm execution completion.</li>
 </ul>
@@ -187,16 +183,6 @@ If SPN update fails, cluster scaling and Azure API authentication may break.
 Immediate escalation required.
 </div>
 
-<hr>
-
-<h3>⚠ Potential Failure Scenarios</h3>
-
-<table>
-<tr><th>Issue</th><th>Possible Cause</th></tr>
-<tr><td>Cluster degraded</td><td>Incorrect client secret</td></tr>
-<tr><td>Scaling failure</td><td>SPN not updated correctly</td></tr>
-<tr><td>Permission denied errors</td><td>SPN role misconfiguration</td></tr>
-</table>
 
 <hr>
 
@@ -213,7 +199,6 @@ Immediate escalation required.
 <h3>🔐 Security Best Practices</h3>
 
 <ul>
-<li>Never store client secret in plain text.</li>
 <li>Use secure communication channels.</li>
 <li>Rotate secrets periodically.</li>
 <li>Limit access to SPN credentials.</li>
@@ -450,7 +435,6 @@ openssl s_client -connect &lt;host&gt;:443 -showcerts
 <li>Store private key securely.</li>
 <li>Never email private key.</li>
 <li>Limit access to certificate files.</li>
-<li>Follow enterprise PKI policies.</li>
 </ul>
 
 <hr>
@@ -533,7 +517,6 @@ https://maxinst.manage.qgctest2.apps.qgctest.maximo.shell.com/toolsapi/toolservi
 <li>Stops Manage application services.</li>
 <li>Prevents new user sessions.</li>
 <li>Terminates background processing.</li>
-<li>Pods remain deployed but application service halts.</li>
 </ul>
 
 <hr>
@@ -543,9 +526,7 @@ https://maxinst.manage.qgctest2.apps.qgctest.maximo.shell.com/toolsapi/toolservi
 <ul>
 <li>Ensure change is approved.</li>
 <li>Notify business users.</li>
-<li>Confirm no active deployments running.</li>
 <li>Ensure no critical integration jobs executing.</li>
-<li>Confirm no running long BROS reports.</li>
 </ul>
 
 <hr>
@@ -554,9 +535,7 @@ https://maxinst.manage.qgctest2.apps.qgctest.maximo.shell.com/toolsapi/toolservi
 
 <ul>
 <li>Access Manage UI → Should show service unavailable.</li>
-<li>Check pods are running but app services halted.</li>
-<li>Verify no active cron executions.</li>
-<li>Confirm no active integration threads.</li>
+<li>All Maximo UI , MEA, CRON pods are Terminated </li>
 </ul>
 
 <hr>
@@ -610,20 +589,12 @@ https://maxinst.manage.qgctest2.apps.qgctest.maximo.shell.com/toolsapi/toolservi
 <tr><th>Issue</th><th>Possible Cause</th></tr>
 <tr><td>Manage not loading</td><td>Database connection issue</td></tr>
 <tr><td>Login failure</td><td>Authentication service delay</td></tr>
-<tr><td>Integrations not working</td><td>MIA bundle not active</td></tr>
+<tr><td>Integrations not working</td><td>MIA/MEA bundle not active</td></tr>
 <tr><td>Cron not running</td><td>CRON bundle issue</td></tr>
 </table>
 
 <hr>
 
-<h3>🚨 When NOT to Use Tools API</h3>
-
-<ul>
-<li>During cluster-level issues.</li>
-<li>During pod crash loops.</li>
-<li>During SPN or infrastructure failure.</li>
-<li>When ARO control plane is degraded.</li>
-</ul>
 
 <div class="warning-box">
 If Manage fails to start after API call, escalate immediately.
@@ -635,8 +606,6 @@ Do NOT repeatedly trigger start command.
 <h3>🔐 Security & Governance</h3>
 
 <ul>
-<li>API calls must be authenticated.</li>
-<li>Use secured environment to execute.</li>
 <li>Log activity under approved change record.</li>
 <li>Capture timestamps of stop/start.</li>
 </ul>
@@ -841,11 +810,9 @@ Scaling is independent and workload-specific.
 
 <table>
 <tr><th>Symptom</th><th>Likely Bundle</th></tr>
-<tr><td>Slow login</td><td>UI</td></tr>
-<tr><td>Integration failure</td><td>MIA / MEA</td></tr>
-<tr><td>Reports timing out</td><td>REPORT</td></tr>
-<tr><td>Escalations not running</td><td>CRON</td></tr>
-<tr><td>Mobile sync delay</td><td>MIA / CRON</td></tr>
+<tr><td>Slow login</td><td>maximoui</td></tr>
+<tr><td>Integration failure</td><td>maximomea</td></tr>
+<tr><td>Escalations not running</td><td>maximocron</td></tr>
 </table>
 
 <hr>
@@ -889,9 +856,15 @@ return `
 <h2>ARO & OpenShift – MAS Infrastructure Architecture</h2>
 
 <p>
-Azure Red Hat OpenShift (ARO) is the managed Kubernetes platform hosting 
-Maximo Application Suite (MAS). Understanding ARO is critical for 
-production support, scaling, troubleshooting, and change management.
+Azure Red Hat OpenShift (ARO) is the managed Kubernetes platform used to host 
+IBM Maximo Application Suite (MAS). In our environment, MAS 8.11 is deployed 
+on ARO with Oracle Database as the backend and currently includes 
+the <b>Manage</b> and <b>Mobile</b> applications.
+</p>
+
+<p>
+Understanding ARO architecture is essential for troubleshooting, scaling, 
+performance tuning, and supporting MAS environments.
 </p>
 
 <hr>
@@ -899,11 +872,16 @@ production support, scaling, troubleshooting, and change management.
 <h3>🏗 What is ARO?</h3>
 
 <ul>
-<li>Managed OpenShift cluster running on Microsoft Azure.</li>
-<li>Provides Kubernetes orchestration.</li>
-<li>Hosts MAS workloads as containerized pods.</li>
-<li>Integrates with Azure networking, identity, and storage.</li>
+<li>ARO is a fully managed <b>Red Hat OpenShift cluster running on Microsoft Azure</b>.</li>
+<li>It provides enterprise Kubernetes infrastructure for containerized workloads.</li>
+<li>MAS components run as <b>containers inside OpenShift pods</b>.</li>
+<li>Microsoft and Red Hat manage the control plane infrastructure.</li>
 </ul>
+
+<div class="note-box">
+MAS does not run on traditional application servers. 
+All MAS components run as containerized workloads on Kubernetes.
+</div>
 
 <hr>
 
@@ -912,39 +890,42 @@ production support, scaling, troubleshooting, and change management.
 <h3>1️⃣ Control Plane</h3>
 
 <ul>
-<li>Managed by Microsoft & Red Hat.</li>
-<li>Runs Kubernetes API server.</li>
+<li>Managed by Microsoft and Red Hat.</li>
+<li>Runs Kubernetes API Server.</li>
 <li>Handles scheduling and orchestration.</li>
-<li>Not accessible for direct modification.</li>
+<li>Users cannot directly access or modify it.</li>
 </ul>
 
 <h3>2️⃣ Worker Nodes</h3>
 
 <ul>
-<li>Virtual machines running Kubernetes workloads.</li>
-<li>Host MAS application pods.</li>
-<li>Scale horizontally.</li>
-<li>Monitored for CPU & memory.</li>
+<li>Virtual machines where application containers run.</li>
+<li>All MAS components (Manage, Mobile etc.) run on worker nodes.</li>
+<li>Nodes provide CPU, memory, and storage resources.</li>
+<li>Clusters can scale by adding additional worker nodes.</li>
 </ul>
 
 <div class="note-box">
-MAS application workloads run only on worker nodes.
+All MAS application pods run only on worker nodes.
 </div>
 
 <hr>
 
-<h2>📂 Namespaces (Projects)</h2>
+<h2>📂 MAS Namespaces (Projects)</h2>
 
 <p>
-In OpenShift, Namespaces (Projects) logically separate workloads.
-Each MAS environment typically has:
+OpenShift uses <b>Namespaces (Projects)</b> to logically separate workloads.
+Each MAS environment is deployed into multiple namespaces.
 </p>
 
+<h4>Common MAS Namespaces</h4>
+
 <ul>
-<li>Core project</li>
-<li>Manage project</li>
-<li>Mobile project</li>
-<li>Integration project</li>
+<li><b>mas-core</b> → Core MAS services</li>
+<li><b>mas-manage</b> → Maximo Manage application</li>
+<li><b>mas-mobile</b> → Maximo Mobile services</li>
+<li><b>mas-integration</b> → Integration services (if enabled)</li>
+<li><b>mas-monitoring</b> → Monitoring and logging components</li>
 </ul>
 
 <hr>
@@ -952,71 +933,57 @@ Each MAS environment typically has:
 <h2>📦 Pods</h2>
 
 <p>
-Pods are the smallest deployable unit in Kubernetes.
-Each Server Bundle corresponds to one or more pods.
+Pods are the smallest deployable units in Kubernetes.
+Each MAS component runs inside one or more pods.
 </p>
 
-<h3>Pod Characteristics</h3>
+<h4>Important Pod Types in MAS</h4>
 
 <ul>
-<li>Ephemeral (can restart anytime)</li>
-<li>Stateless</li>
-<li>Resource-limited (CPU / Memory)</li>
-<li>Auto-healing via Kubernetes</li>
+<li><b>Manage UI Pods</b> – Handles Maximo web UI</li>
+<li><b>MIF/MIA Pods</b> – Integration framework processing</li>
+<li><b>Cron Pods</b> – Executes cron tasks</li>
+<li><b>Report Pods</b> – Handles BIRT reporting</li>
+<li><b>Mobile Service Pods</b> – Mobile synchronization services</li>
+<li><b>MaxS Pod</b> – Administrative and system services</li>
 </ul>
 
-<h4>Example Pod Types in MAS</h4>
-
-<ul>
-<li>UI pods</li>
-<li>MIA/MEA pods</li>
-<li>CRON pods</li>
-<li>REPORT pods</li>
-<li>MaxS pod</li>
-</ul>
+<div class="warning-box">
+Pods are ephemeral. If a pod crashes or restarts, Kubernetes automatically recreates it.
+</div>
 
 <hr>
 
 <h2>🚀 Deployments</h2>
 
 <p>
-Deployment objects manage pod replicas and updates.
+Deployments manage the lifecycle of pods.
+They ensure the correct number of pods are always running.
 </p>
 
 <ul>
-<li>Ensures desired number of pods are running.</li>
-<li>Supports rolling updates.</li>
-<li>Automatically replaces failed pods.</li>
+<li>Controls pod scaling.</li>
+<li>Manages rolling updates during upgrades.</li>
+<li>Automatically recreates failed pods.</li>
 </ul>
 
-<h4>Key Concept</h4>
-<p>
-You do not manually create pods.
-You manage deployments.
-</p>
-
-<hr>
-
-<h2>🔁 ReplicaSets</h2>
-
-<ul>
-<li>Ensures specific number of pod replicas.</li>
-<li>Created automatically by Deployment.</li>
-<li>Supports scaling operations.</li>
-</ul>
+<div class="note-box">
+In OpenShift you never create pods directly. Deployments create and manage pods.
+</div>
 
 <hr>
 
 <h2>🌍 Services</h2>
 
 <p>
-Service objects expose pods internally within cluster.
+Services provide stable networking for pods.
+Since pods are temporary, services ensure applications can always reach them.
 </p>
 
 <ul>
-<li>Provides stable network endpoint.</li>
-<li>Load balances between pods.</li>
-<li>Connects UI to MIA/DB layers.</li>
+<li>Acts as an internal load balancer.</li>
+<li>Provides stable internal DNS.</li>
+<li>Connects UI pods to backend services.</li>
 </ul>
 
 <hr>
@@ -1024,17 +991,23 @@ Service objects expose pods internally within cluster.
 <h2>🌐 Routes</h2>
 
 <p>
-Routes expose services externally via DNS.
+Routes expose OpenShift services to external users through DNS.
 </p>
 
 <ul>
-<li>Maps external DNS → Service → Pod.</li>
+<li>External URL → Route → Service → Pod</li>
 <li>Configured with TLS certificates.</li>
-<li>Example: admin.qgcprod.apps...</li>
+<li>Used for accessing MAS UI.</li>
 </ul>
 
+<h4>Example</h4>
+
+<pre class="code-block">
+https://manage.qgcprod.apps.cluster.domain
+</pre>
+
 <div class="warning-box">
-If Route certificate is invalid, browser trust fails immediately.
+If route certificates expire or become invalid, users will not be able to access MAS UI.
 </div>
 
 <hr>
@@ -1042,19 +1015,20 @@ If Route certificate is invalid, browser trust fails immediately.
 <h2>🔐 Secrets</h2>
 
 <p>
-Secrets store sensitive information in Kubernetes.
+Secrets store sensitive credentials used by MAS.
 </p>
 
 <ul>
-<li>SPN credentials</li>
-<li>Database passwords</li>
+<li>Database credentials (Oracle)</li>
+<li>Azure Service Principal credentials</li>
 <li>TLS certificates</li>
-<li>API keys</li>
+<li>API tokens</li>
 </ul>
 
-<h4>Important Example</h4>
+<h4>Example Secret</h4>
+
 <ul>
-<li>azure-credentials (SPN secret)</li>
+<li>azure-credentials (used for Azure authentication)</li>
 </ul>
 
 <hr>
@@ -1062,69 +1036,73 @@ Secrets store sensitive information in Kubernetes.
 <h2>📄 ConfigMaps</h2>
 
 <p>
-ConfigMaps store non-sensitive configuration data.
+ConfigMaps store application configuration parameters.
 </p>
 
 <ul>
 <li>Environment variables</li>
-<li>Application configuration</li>
-<li>Runtime parameters</li>
+<li>Application configuration settings</li>
+<li>MAS runtime parameters</li>
 </ul>
 
 <hr>
 
-<h2>💾 Persistent Volumes (PV)</h2>
+<h2>💾 Persistent Storage</h2>
 
 <p>
-Persistent volumes store durable data.
+Although pods are temporary, MAS uses persistent storage for durable data.
 </p>
 
 <ul>
 <li>Report output files</li>
-<li>Logs (if configured)</li>
-<li>Shared storage</li>
+<li>Shared configuration data</li>
+<li>Persistent logs</li>
 </ul>
 
 <hr>
 
 <h2>📊 Resource Management</h2>
 
-<h3>CPU & Memory Limits</h3>
+<h3>CPU and Memory Limits</h3>
 
 <ul>
-<li>Each pod has defined resource requests & limits.</li>
-<li>If exceeded → pod may restart.</li>
+<li>Each pod has defined CPU and memory limits.</li>
+<li>If limits are exceeded, pods may restart.</li>
 </ul>
 
-<h3>Horizontal Scaling</h3>
+<h3>Scaling</h3>
 
 <ul>
-<li>Increase pod replicas.</li>
-<li>Based on workload demand.</li>
-<li>Applied per bundle.</li>
+<li>Pod replicas can be increased for higher load.</li>
+<li>Scaling is usually performed through MAS Server Bundle configuration.</li>
 </ul>
 
 <hr>
 
-<h2>🔍 Log Locations</h2>
+<h2>🔍 Logs and Troubleshooting</h2>
+
+<p>
+Logs are the primary troubleshooting source in MAS environments.
+</p>
 
 <ul>
-<li>OpenShift Console → Pods → Logs tab.</li>
-<li>MaxS pod contains administrative logs.</li>
-<li>Integration logs under MIA pods.</li>
+<li>OpenShift Console → Pods → Logs</li>
+<li>MaxS pod contains system administration logs</li>
+<li>Manage pods contain application logs</li>
+<li>Mobile pods contain mobile synchronization logs</li>
 </ul>
 
 <hr>
 
 <h2>⚠ Common ARO-Level Issues</h2>
 
-<table>
-<tr><th>Symptom</th><th>Possible Cause</th></tr>
-<tr><td>Pods restarting</td><td>Memory limit exceeded</td></tr>
-<tr><td>Route inaccessible</td><td>Certificate issue</td></tr>
-<tr><td>Scaling failure</td><td>SPN authentication issue</td></tr>
-<tr><td>Slow response</td><td>CPU contention</td></tr>
-<tr><td>CrashLoopBackOff</td><td>Application misconfiguration</td></tr>
+<table class="styled-table">
+<tr><th>Issue</th><th>Possible Cause</th></tr>
+<tr><td>Pods restarting frequently</td><td>Memory or CPU limit exceeded</td></tr>
+<tr><td>MAS UI not accessible</td><td>Route or certificate issue</td></tr>
+<tr><td>Slow performance</td><td>High resource usage</td></tr>
+<tr><td>Scaling failure</td><td>Azure authentication or SPN issue</td></tr>
+<tr><td>CrashLoopBackOff</td><td>Application configuration error</td></tr>
 </table>
 
 <hr>
@@ -1132,27 +1110,18 @@ Persistent volumes store durable data.
 <h2>🛠 Operational Best Practices</h2>
 
 <ul>
-<li>Monitor pod resource utilization.</li>
-<li>Never delete pods directly without analysis.</li>
-<li>Use rolling restart instead of force deletion.</li>
-<li>Document scaling changes.</li>
-<li>Capture pod logs before restart during incidents.</li>
+<li>Monitor CPU and memory usage regularly.</li>
+<li>Always collect logs before restarting pods.</li>
+<li>Do not manually delete pods unless necessary.</li>
+<li>Use controlled rolling restart during incidents.</li>
+<li>Document all scaling and configuration changes.</li>
 </ul>
 
 <hr>
 
-<h2>📋 Production Governance</h2>
-
-<ul>
-<li>All scaling requires approved change.</li>
-<li>SPN updates logged via change management.</li>
-<li>Certificate updates validated post-deployment.</li>
-<li>Bundle configuration documented per environment.</li>
-</ul>
-
 <div class="note-box">
-Understanding ARO concepts is essential for MAS L2/L3 support.
-MAS is Kubernetes-native — infrastructure knowledge directly impacts stability.
+MAS is a Kubernetes-native platform. 
+Understanding ARO infrastructure is essential for effective L2/L3 support and troubleshooting.
 </div>
 
 `;

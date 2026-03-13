@@ -116,316 +116,485 @@ function loadManageContent(type) {
 function getAutomationContent() {
 return `
 
-<h3>Automation Scripts – Complete Technical KT</h3>
+<h2>Automation Scripts – Maximo Framework Concepts</h2>
 
-<div class="info-card">
-<b>Automation Scripts</b> allow implementing business logic without Java deployment.
-They operate inside the Maximo MBO framework and replace most traditional Java customizations.
-</div>
+<p>
+Automation Scripts allow developers to implement business logic in Maximo without writing Java code or redeploying EAR files.
+They run inside the Maximo scripting engine and interact directly with Maximo Business Objects (MBOs).
+</p>
 
+<hr>
 
-<!-- ========================================================= -->
-<h4>1. MBO vs MBO Set</h4>
+<h3>1. MBO vs MBO Set</h3>
 
-<h5>1.1 Core Definitions</h5>
+<h4>MBO (Maximo Business Object)</h4>
 
 <ul>
-<li><b>MBO (Maximo Business Object)</b> – Represents a single row from a Maximo table.  
-Example: One ASSET record.</li>
-
-<li><b>MBO Set</b> – Represents a collection of MBOs (resultset).  
-Example: All ASSET records returned by a query.</li>
+<li>Represents a single record from a Maximo table.</li>
+<li>Example: One ASSET record from the ASSET table.</li>
+<li>Scripts normally operate on the current MBO.</li>
 </ul>
 
-<div class="highlight-box">
-MBO Set = Table / Dataset  
-MBO = One Row inside the dataset
+<h4>MBO Set</h4>
+
+<ul>
+<li>Represents a collection of MBOs.</li>
+<li>Equivalent to a result set from a database query.</li>
+<li>Example: All assets returned from a search.</li>
+</ul>
+
+<div class="note-box">
+MBO Set = Dataset / Resultset  
+MBO = One row inside the dataset
 </div>
 
-Automation scripts always operate on:
-<ul>
-<li>The current <b>mbo</b></li>
-<li>Or retrieve additional <b>MboSets</b> when needed</li>
-</ul>
+<hr>
 
+<h3>2. Java Classes vs Automation Script Launch Points</h3>
 
-<!-- ========================================================= -->
-<h4>2. Java Classes in Maximo & Script Equivalents</h4>
+<p>
+Maximo business logic is traditionally written in Java classes.
+Automation scripts provide equivalent behavior without requiring server restart.
+</p>
 
 <table class="styled-table">
-<tr><th>Java Class</th><th>Purpose</th><th>Automation Script Equivalent</th></tr>
-<tr><td>MBO class</td><td>Object level logic</td><td>Object Launch Point</td></tr>
-<tr><td>Field class</td><td>Attribute level logic</td><td>Attribute Launch Point</td></tr>
-<tr><td>Action class</td><td>Button / Workflow logic</td><td>Action Launch Point</td></tr>
-<tr><td>Custom Cron</td><td>Scheduled logic</td><td>ScriptCrontask</td></tr>
-<tr><td>Condition class</td><td>Workflow condition</td><td>Condition Launch Point</td></tr>
-<tr><td>Role class</td><td>Assignment routing</td><td>ScriptRole</td></tr>
-<tr><td>Integration classes</td><td>MIF Pre/Post processing</td><td>Integration Launch Point</td></tr>
+
+<tr>
+<th>Java Class Type</th>
+<th>Purpose</th>
+<th>Automation Script Equivalent</th>
+</tr>
+
+<tr>
+<td>MBO Class</td>
+<td>Object level logic</td>
+<td>Object Launch Point</td>
+</tr>
+
+<tr>
+<td>Field Class</td>
+<td>Attribute level validation</td>
+<td>Attribute Launch Point</td>
+</tr>
+
+<tr>
+<td>Action Class</td>
+<td>Triggered via buttons / escalation / workflow</td>
+<td>Action Launch Point</td>
+</tr>
+
+<tr>
+<td>Condition Class</td>
+<td>Workflow routing logic</td>
+<td>Condition Launch Point</td>
+</tr>
+
+<tr>
+<td>Role Class</td>
+<td>Assignment routing</td>
+<td>ScriptRole</td>
+</tr>
+
+<tr>
+<td>Cron Class</td>
+<td>Scheduled logic execution</td>
+<td>ScriptCronTask</td>
+</tr>
+
+<tr>
+<td>Integration Class</td>
+<td>MIF pre/post processing</td>
+<td>Integration Script</td>
+</tr>
+
 </table>
 
-Automation scripts eliminate:
-• EAR rebuild  
-• Deployment  
-• Server restart  
+<hr>
 
+<h3>3. MBO Lifecycle</h3>
 
-<!-- ========================================================= -->
-<h4>3. MBO Lifecycle</h4>
-
-<h5>Lifecycle Stages</h5>
+<p>
+Understanding the lifecycle of an MBO helps determine the correct automation script event.
+</p>
 
 <ul>
-<li>Instantiation – MBO created in memory</li>
-<li>InitValue() – When record loads from List → Detail</li>
-<li>Init() – After initValue; used for security & field control</li>
-<li>GetValue()</li>
-<li>SetValue()</li>
-<li>Save()</li>
-<li>Commit()</li>
-<li>Delete()</li>
-<li>Destruction</li>
+
+<li><b>Instantiation</b> – Object created in memory.</li>
+
+<li><b>InitValue()</b> – Called when record loads in UI.</li>
+
+<li><b>Init()</b> – Used for access restrictions.</li>
+
+<li><b>GetValue()</b> – Retrieves attribute value.</li>
+
+<li><b>SetValue()</b> – Updates attribute value.</li>
+
+<li><b>Save()</b> – Persists changes to database.</li>
+
+<li><b>Commit()</b> – Transaction permanently committed.</li>
+
+<li><b>Delete()</b> – Record removed.</li>
+
 </ul>
 
-Most scripts execute during:
+<hr>
+
+<h3>4. Object Launch Point</h3>
+
+<p>
+Object Launch Points trigger automation scripts based on actions performed on an MBO such as save, add, or delete.
+</p>
+
+<h4>Common Events</h4>
+
 <ul>
-<li>Before Save</li>
-<li>After Save</li>
-<li>After Commit</li>
+
+<li><b>Initialize Value</b> – Runs when record is loaded.</li>
+
+<li><b>Validate Application</b> – Runs during record validation before saving.</li>
+
+<li><b>Allow Object Creation</b> – Controls whether record creation is allowed.</li>
+
+<li><b>Allow Object Deletion</b> – Controls whether record deletion is allowed.</li>
+
+<li><b>Save</b> – Triggered when record is saved.</li>
+
 </ul>
 
+<h4>Save Timing Options</h4>
 
-<!-- ========================================================= -->
-<h4>4. Object Launch Point</h4>
+<table class="styled-table">
 
-Used when logic must run at object level (ASSET, WORKORDER, SR etc.)
+<tr>
+<th>Timing</th>
+<th>Description</th>
+</tr>
 
-<h5>4.1 Event Types</h5>
+<tr>
+<td>Before Save</td>
+<td>Runs before record is written to database.</td>
+</tr>
 
-<h6>Initialize Value</h6>
-Triggers when record opens.  
-Used to prepopulate default values.
+<tr>
+<td>After Save</td>
+<td>Runs after record saved but before commit.</td>
+</tr>
 
-Equivalent to Java initValue().
+<tr>
+<td>After Commit</td>
+<td>Runs after database transaction completes.</td>
+</tr>
 
-<h6>Validate Application</h6>
-Triggers during Save validation.
+</table>
 
-Use cases:
-• Check mandatory fields  
-• Validate status transitions  
+<hr>
 
-Use:
+<h3>5. Attribute Launch Point</h3>
+
+<p>
+Attribute Launch Points execute scripts immediately when a field value changes.
+</p>
+
+<h4>Common Events</h4>
+
+<ul>
+
+<li><b>Initialize Value</b> – Default value when record loads.</li>
+
+<li><b>Validate</b> – Runs when user exits field.</li>
+
+<li><b>Retrieve List</b> – Customizes lookup list.</li>
+
+<li><b>Run Action</b> – Runs when field value changes.</li>
+
+<li><b>Initial Access Restriction</b> – Controls field access.</li>
+
+</ul>
+
+<div class="note-box">
+Attribute launch points execute instantly without requiring a Save operation.
+</div>
+
+<hr>
+
+<h3>6. Action Launch Point</h3>
+
+<p>
+Action Launch Points execute logic only when an action is triggered.
+</p>
+
+<h4>Where They Are Used</h4>
+
+<ul>
+
+<li>Application buttons</li>
+
+<li>Escalations</li>
+
+<li>Workflow nodes</li>
+
+</ul>
+
+<h4>Execution Flow</h4>
+
 <pre class="code-block">
-service.error("cust","invalidStatus")
+
+User / Workflow / Escalation
+            ↓
+        Action Triggered
+            ↓
+   Action Launch Point Executes
+            ↓
+       Automation Script Runs
+
 </pre>
 
-<h6>Allow Object Creation</h6>
-Runs before new record created.  
-Return false or throw error to block creation.
+<hr>
 
-<h6>Allow Object Deletion</h6>
-Runs before delete execution.
+<h3>7. MXServer – System Services</h3>
 
-<h6>Save Event</h6>
-
-Subtypes:
-• Add (new record)  
-• Update (edit record)  
-• Delete  
-
-Timing Options:
-
-<b>Before Save</b> – Most common  
-<b>After Save</b> – After save, before commit  
-<b>After Commit</b> – After DB commit (cannot block)
-
-Use After Commit only for:
-• Integration  
-• Notifications  
-• Logging  
-
-
-<!-- ========================================================= -->
-<h4>5. Attribute Launch Point</h4>
-
-Runs immediately when user changes field.  
-Does NOT require Save.
-
-<table class="styled-table">
-<tr><th>Event</th><th>When It Executes</th><th>Example</th></tr>
-<tr><td>Initial Access Restriction</td><td>When MBO loads</td><td>Make field read-only</td></tr>
-<tr><td>Initialize Value</td><td>When record displays</td><td>Default Storeroom</td></tr>
-<tr><td>Validate</td><td>On tab-out</td><td>Target Date validation</td></tr>
-<tr><td>Retrieve List</td><td>On lookup open</td><td>Filter active records</td></tr>
-<tr><td>Run Action</td><td>Immediately after change</td><td>Auto-populate fields</td></tr>
-</table>
-
-
-<!-- ========================================================= -->
-<h4>6. Action Launch Point</h4>
-
-Triggers only when explicitly invoked:
-
-• Button click  
-• Escalation  
-• Workflow node  
-
-Conceptual Flow:
-
-USER → ACTION → Launch Point → Script
-
-Difference:
-Object LP = Automatic  
-Action LP = Manual / Triggered  
-
-Used for:
-• Recalculate Cost  
-• Copy Priority  
-• Escalation updates  
-
-
-<!-- ========================================================= -->
-<h4>7. MXServer</h4>
+<p>
+MXServer provides access to system-level services.
+</p>
 
 <pre class="code-block">
+
 from psdi.server import MXServer
+
 mx = MXServer.getMXServer()
+
 userInfo = mx.getSystemUserInfo()
-assetset = mx.getMboSet("ASSET", userInfo)
+
+assetSet = mx.getMboSet("ASSET", userInfo)
+
 </pre>
 
-Use only when relationships not possible.  
-Preferred method = Database relationship.
+<hr>
 
+<h3>8. Fetching MBO Sets</h3>
 
-<!-- ========================================================= -->
-<h4>8. Fetching MBO Sets</h4>
-
-<h5>8.1 Database Relationship (Preferred)</h5>
+<h4>1. Database Relationship (Recommended)</h4>
 
 <pre class="code-block">
-assetset = mbo.getMboSet("ALLASSETS")
+
+assetSet = mbo.getMboSet("ALLASSETS")
+
 </pre>
 
-<h5>8.2 Dynamic Relationship</h5>
+<h4>2. Dynamic Relationship</h4>
 
 <pre class="code-block">
-assetset = mbo.getMboSet(
-"$ASSET:ASSET:ASSETNUM='{}' AND SITEID='{}'".format(
-mbo.getString("ASSETNUM"),
-mbo.getString("SITEID")
-))
+
+assetSet = mbo.getMboSet(
+"$ASSET:ASSET:ASSETNUM='{}'".format(mbo.getString("ASSETNUM"))
+)
+
 </pre>
 
-<h5>8.3 Using MXServer</h5>
+<h4>3. MXServer Method</h4>
 
 <pre class="code-block">
-assetset = mx.getMboSet("ASSET", mx.getUserInfo())
+
+mx = MXServer.getMXServer()
+assetSet = mx.getMboSet("ASSET", mx.getUserInfo())
+
 </pre>
 
+<hr>
 
-<!-- ========================================================= -->
-<h4>9. Iterating Through MboSet</h4>
+<h3>9. Iterating Through MBO Sets</h3>
 
-Avoid:
+<h4>Recommended Method</h4>
+
 <pre class="code-block">
-for i in range(woset.count()):
-</pre>
 
-Preferred:
-<pre class="code-block">
 wo = woset.moveFirst()
+
 while wo:
     wo = woset.moveNext()
+
 </pre>
 
+<div class="warning-box">
+Avoid using count() repeatedly because it triggers additional database queries.
+</div>
 
-<!-- ========================================================= -->
-<h4>10. GetValue / SetValue</h4>
+<hr>
+
+<h3>10. GetValue and SetValue</h3>
+
+<h4>Get Value</h4>
 
 <pre class="code-block">
-asset = mbo.getValue("ASSETNUM")
-mbo.setValue("STATUS","APPR")
+
+assetNum = mbo.getString("ASSETNUM")
+
 </pre>
 
+<h4>Set Value</h4>
 
-<!-- ========================================================= -->
-<h4>11. MboConstants</h4>
+<pre class="code-block">
+
+mbo.setValue("DESCRIPTION", "Updated Value")
+
+</pre>
+
+<hr>
+
+<h3>11. MboConstants Flags</h3>
+
+<p>
+Flags control how setValue behaves by bypassing validations or access checks.
+</p>
 
 <table class="styled-table">
-<tr><th>Constant</th><th>Purpose</th></tr>
-<tr><td>NOVALIDATION</td><td>Skip validation</td></tr>
-<tr><td>NOACCESSCHECK</td><td>Override security</td></tr>
-<tr><td>NOACTION</td><td>Skip action logic</td></tr>
-<tr><td>READONLY</td><td>Make field read-only</td></tr>
-<tr><td>REQUIRED</td><td>Make field mandatory</td></tr>
+
+<tr>
+<th>Constant</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>NOVALIDATION</td>
+<td>Skip validation</td>
+</tr>
+
+<tr>
+<td>NOACCESSCHECK</td>
+<td>Ignore read-only restrictions</td>
+</tr>
+
+<tr>
+<td>NOACTION</td>
+<td>Skip business rules</td>
+</tr>
+
+<tr>
+<td>READONLY</td>
+<td>Make field read-only</td>
+</tr>
+
+<tr>
+<td>REQUIRED</td>
+<td>Make field mandatory</td>
+</tr>
+
 </table>
 
-Combine flags:
-<pre class="code-block">
-mbo.setValue("FIELD", value,
-MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
-</pre>
+<hr>
 
+<h3>12. Error Handling</h3>
 
-<!-- ========================================================= -->
-<h4>12. Field Flags</h4>
-
-Read-only:
-<pre class="code-block">
-mbo.setFieldFlag("DESCRIPTION",
-MboConstants.READONLY, True)
-</pre>
-
-Mandatory:
-<pre class="code-block">
-mbo.setFieldFlag("LOCATION",
-MboConstants.REQUIRED, True)
-</pre>
-
-
-<!-- ========================================================= -->
-<h4>13. Error Handling</h4>
+<h4>Throw Error</h4>
 
 <pre class="code-block">
-service.error("MYGRP","MYKEY")
-service.setWarning("MYGRP","MYWARN")
+
+service.error("GROUP","KEY")
+
 </pre>
 
+<h4>Raise Warning</h4>
 
-<!-- ========================================================= -->
-<h4>14. Implicit Variables</h4>
+<pre class="code-block">
+
+service.setWarning("GROUP","KEY")
+
+</pre>
+
+<hr>
+
+<h3>13. Important Implicit Variables</h3>
 
 <table class="styled-table">
-<tr><th>Variable</th><th>Meaning</th></tr>
-<tr><td>mbo</td><td>Current record</td></tr>
-<tr><td>mboset</td><td>Current resultset</td></tr>
-<tr><td>onadd</td><td>Record creation</td></tr>
-<tr><td>onupdate</td><td>Record update</td></tr>
-<tr><td>ondelete</td><td>Record deletion</td></tr>
-<tr><td>interactive</td><td>True if triggered by UI</td></tr>
-<tr><td>app</td><td>Application name</td></tr>
-<tr><td>service</td><td>Service API</td></tr>
-<tr><td>evalResult</td><td>Condition return value</td></tr>
+
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>mbo</td>
+<td>Current record</td>
+</tr>
+
+<tr>
+<td>mboset</td>
+<td>Current dataset</td>
+</tr>
+
+<tr>
+<td>userInfo</td>
+<td>Current user session</td>
+</tr>
+
+<tr>
+<td>interactive</td>
+<td>True if triggered from UI</td>
+</tr>
+
+<tr>
+<td>onadd</td>
+<td>True when creating record</td>
+</tr>
+
+<tr>
+<td>onupdate</td>
+<td>True when updating record</td>
+</tr>
+
+<tr>
+<td>ondelete</td>
+<td>True when deleting record</td>
+</tr>
+
 </table>
 
+<hr>
 
-<!-- ========================================================= -->
-<h4>15. Launch Point Selection Guide</h4>
+<h3>14. Quick Launch Point Selection Guide</h3>
 
 <table class="styled-table">
-<tr><th>Requirement</th><th>Launch Point</th></tr>
-<tr><td>Logic on Save</td><td>Object LP</td></tr>
-<tr><td>Immediate field validation</td><td>Attribute LP</td></tr>
-<tr><td>Button / Escalation logic</td><td>Action LP</td></tr>
-<tr><td>Workflow condition</td><td>Condition LP</td></tr>
-<tr><td>Assignment routing</td><td>Role Script</td></tr>
-<tr><td>Integration transformation</td><td>Integration LP</td></tr>
+
+<tr>
+<th>Requirement</th>
+<th>Launch Point</th>
+</tr>
+
+<tr>
+<td>Logic during save</td>
+<td>Object Launch Point</td>
+</tr>
+
+<tr>
+<td>Logic when field changes</td>
+<td>Attribute Launch Point</td>
+</tr>
+
+<tr>
+<td>Logic via button/workflow/escalation</td>
+<td>Action Launch Point</td>
+</tr>
+
+<tr>
+<td>Workflow routing condition</td>
+<td>Condition Launch Point</td>
+</tr>
+
+<tr>
+<td>Assignment routing</td>
+<td>Script Role</td>
+</tr>
+
 </table>
+
+<div class="note-box">
+
+Automation Scripts are the recommended approach for implementing custom logic in modern Maximo environments because they avoid Java deployment, reduce downtime, and simplify maintenance.
+
+</div>
 
 `;
 }
-
 
 function getEscalationContent() {
 return `

@@ -35,6 +35,7 @@ function renderMobileSection() {
                     <button data-type="issue-sttl">Issues & Transfers – STTL</button>
                     <button data-type="receive-sttl">Inventory Receiving – STTL</button>
                     <button data-type="count-sttl">Inventory Counting – STTL</button>
+                    <button data-type="js-kt">JavaScript KT</button>
                 </div>
 
                 <!-- RIGHT CONTENT -->
@@ -121,6 +122,10 @@ function loadMobileContent(type) {
 
         case "count-sttl":
             contentArea.innerHTML = getCountSTTLContent();
+            break;
+         
+         case "js-kt":
+            contentArea.innerHTML = getMobileJSContent();
             break;
 
         default:
@@ -672,11 +677,55 @@ Improper version alignment can cause build and deployment failures.
 
 function getTechQGCContent() {
 return `
+
 <h3>3. Technician App – QGC Customizations</h3>
 
 <div class="info-card">
-WILL UPDATE THIS ASAP
+In the QGC environment, the Technician Mobile application was primarily deployed using 
+Out-of-the-Box (OOB) functionality provided by IBM Maximo Mobile.
+
+During the MAS upgrade project, due to project timeline constraints, the application was 
+not fully customized for QGC. The implementation focused on enabling the standard 
+Technician workflow with minimal modifications to ensure system availability and 
+operational continuity.
+
+Most of the functionality currently running in QGC follows the default OOB logic of 
+the Maximo Mobile Technician application.
 </div>
+
+
+<h4>3.1 Customization Status</h4>
+
+<ul>
+<li>No major XML or JavaScript customizations were implemented specifically for QGC.</li>
+<li>The application behavior mainly follows standard Maximo Mobile Technician logic.</li>
+<li>Only required configuration changes were applied to support the QGC environment.</li>
+</ul>
+
+
+<h4>3.2 Development Attempts in Test Environment</h4>
+
+<p>
+<b>Sidhant Meru</b> and <b>Ved Gupta</b> attempted to replicate the enhanced 
+Technician application logic that was implemented for the STTL environment.  
+These changes were explored in the QGC test environment for evaluation purposes.
+</p>
+
+<p>
+However, these customizations were <b>not promoted to the QGC production environment</b>, 
+and therefore the production deployment continues to run with primarily OOB functionality.
+</p>
+
+
+<h4>3.3 Reference Implementation</h4>
+
+<p>
+For a detailed understanding of the customized Technician Mobile implementation, 
+refer to the <b>STTL Technician App</b> section in this documentation.  
+The STTL implementation contains the extended logic and enhancements that were evaluated 
+but not fully adopted in the QGC deployment.
+</p>
+
 `;
 }
 
@@ -3149,6 +3198,779 @@ Save Transaction
 <pre class="code-block">
 "Item Physical Count is saved"
 </pre>
+
+`;
+}
+
+
+function getMobileJSContent() {
+return `
+
+<h2>Maximo Mobile Development – JavaScript Customization Guide</h2>
+
+<div class="info-card">
+Maximo Mobile applications are built using the IBM Mobile Application Framework (MAF).
+These applications internally use JavaScript, React-based components, and controller-driven architecture.
+
+In Maximo Mobile customizations, developers normally do NOT modify core application controllers.
+Instead, all custom logic is implemented inside a centralized customization file:
+
+<b>AppCustomization.js</b>
+</div>
+
+<hr>
+
+<h3>1. Mobile Application Architecture</h3>
+
+<p>
+Each Maximo Mobile application (Technician, Issues & Transfers, Inventory, etc.) follows a layered architecture.
+</p>
+
+<ul>
+<li>UI Pages (React components)</li>
+<li>Page Controllers</li>
+<li>Datasources</li>
+<li>Customizations (AppCustomization.js)</li>
+</ul>
+
+<div class="note-box">
+Best Practice: Always implement custom logic in <b>AppCustomization.js</b> instead of modifying core framework files.
+</div>
+
+<hr>
+
+<h3>2. Key File Used for Customizations</h3>
+
+<h4>AppCustomization.js</h4>
+
+<p>
+This file acts as the entry point for all custom JavaScript logic in Maximo Mobile.
+</p>
+
+<p>
+Location inside workspace:
+</p>
+
+<pre class="code-block">
+
+src/AppCustomization.js
+
+</pre>
+
+<p>
+All page events, datasource modifications, and controller overrides are handled here.
+</p>
+
+<hr>
+
+<h3>3. Important JavaScript Knowledge Required</h3>
+
+<h4>JavaScript Fundamentals</h4>
+
+<ul>
+<li>Variables (let, const)</li>
+<li>Functions</li>
+<li>Arrow functions</li>
+<li>Promises</li>
+<li>Async / Await</li>
+<li>Objects and arrays</li>
+<li>ES6 modules</li>
+<li>Event handling</li>
+</ul>
+
+<h4>React Basics</h4>
+
+<ul>
+<li>Component lifecycle</li>
+<li>Props and state</li>
+<li>Event handlers</li>
+<li>Hooks (basic understanding)</li>
+<li>Component rendering</li>
+</ul>
+
+<div class="note-box">
+Developers do not need deep React knowledge because most UI components are already provided by the framework.
+</div>
+
+<hr>
+
+<h3>4. Detecting Current Page</h3>
+
+<p>
+Custom logic often needs to run only for specific pages.
+</p>
+
+<pre class="code-block">
+
+if(page.name === "workOrderDetails"){
+
+   // execute logic only for Work Order page
+
+}
+
+</pre>
+
+<p>
+Page object contains metadata such as:
+</p>
+
+<ul>
+<li>page.name</li>
+<li>page.state</li>
+<li>page.datasource</li>
+</ul>
+
+<hr>
+
+<h3>5. Accessing Datasources</h3>
+
+<p>
+Datasources represent backend data retrieved from Maximo.
+</p>
+
+<pre class="code-block">
+
+const ds = page.datasources["workOrderDS"];
+
+</pre>
+
+<h4>Access Current Record</h4>
+
+<pre class="code-block">
+
+let record = ds.item;
+
+console.log(record.description);
+
+</pre>
+
+<h4>Update Attribute Value</h4>
+
+<pre class="code-block">
+
+ds.item.priority = 3;
+
+</pre>
+
+<hr>
+
+<h3>6. Detecting Page Events</h3>
+
+<p>
+Events are triggered when pages load or when data changes.
+</p>
+
+<h4>Page Initialization</h4>
+
+<pre class="code-block">
+
+app.on('pageInitialized', (page) => {
+
+   if(page.name === "workOrderDetails"){
+
+       console.log("Work Order page loaded");
+
+   }
+
+});
+
+</pre>
+
+<hr>
+
+<h3>7. Detecting Data Changes</h3>
+
+<pre class="code-block">
+
+page.datasources.workOrderDS.on('itemChanged', (data) => {
+
+   console.log("Record changed");
+
+});
+
+</pre>
+
+<hr>
+
+<h3>8. Adding Custom Logic Before Controller Execution</h3>
+
+<p>
+Developers can intercept controller events before execution.
+</p>
+
+<pre class="code-block">
+
+app.on('beforeSave', (context) => {
+
+   if(context.page.name === "workOrderDetails"){
+
+       console.log("Before save logic");
+
+   }
+
+});
+
+</pre>
+
+<hr>
+
+<h3>9. Adding Logic After Controller Execution</h3>
+
+<pre class="code-block">
+
+app.on('afterSave', (context) => {
+
+   console.log("After save executed");
+
+});
+
+</pre>
+
+<hr>
+
+<h3>10. Overriding Controller Logic</h3>
+
+<p>
+Core controller behavior can be overridden by injecting custom handlers.
+</p>
+
+<pre class="code-block">
+
+app.overrideController("WorkOrderController", {
+
+   save: async function(originalMethod, context){
+
+       console.log("Custom logic before save");
+
+       await originalMethod(context);
+
+       console.log("Custom logic after save");
+
+   }
+
+});
+
+</pre>
+
+<div class="note-box">
+The <b>originalMethod</b> parameter allows calling the original controller logic.
+</div>
+
+<hr>
+
+<h3>11. Stopping Controller Execution</h3>
+
+<p>
+Sometimes controller logic must be blocked based on business rules.
+</p>
+
+<pre class="code-block">
+
+app.overrideController("WorkOrderController", {
+
+   save: async function(originalMethod, context){
+
+       if(context.page.datasources.workOrderDS.item.status === "COMP"){
+
+           throw new Error("Completed work orders cannot be modified");
+
+       }
+
+       await originalMethod(context);
+
+   }
+
+});
+
+</pre>
+
+<hr>
+
+<h3>12. Adding Logic Before and After Controller</h3>
+
+<pre class="code-block">
+
+app.overrideController("WorkOrderController", {
+
+   changeStatus: async function(originalMethod, context){
+
+       console.log("Before status change");
+
+       await originalMethod(context);
+
+       console.log("After status change");
+
+   }
+
+});
+
+</pre>
+
+<hr>
+
+<h3>13. Working With Datasource Events</h3>
+
+<h4>Before Data Save</h4>
+
+<pre class="code-block">
+
+ds.on("beforeSave", () => {
+
+   console.log("Data about to be saved");
+
+});
+
+</pre>
+
+<h4>After Data Save</h4>
+
+<pre class="code-block">
+
+ds.on("afterSave", () => {
+
+   console.log("Data saved successfully");
+
+});
+
+</pre>
+
+<hr>
+
+<h3>14. Adding UI Behavior</h3>
+
+<h4>Hide Field</h4>
+
+<pre class="code-block">
+
+page.state.readonly = true;
+
+</pre>
+
+<h4>Make Field Mandatory</h4>
+
+<pre class="code-block">
+
+page.state.required = true;
+
+</pre>
+
+<hr>
+
+<h3>15. Calling Maximo APIs</h3>
+
+<pre class="code-block">
+
+await ds.load();
+
+</pre>
+
+<pre class="code-block">
+
+await ds.save();
+
+</pre>
+
+<hr>
+
+<h3>16. Logging</h3>
+
+<pre class="code-block">
+
+console.log("Debug message");
+
+</pre>
+
+<hr>
+
+<h3>17. Common Customization Scenarios</h3>
+
+<ul>
+
+<li>Auto populate field values</li>
+
+<li>Restrict editing based on status</li>
+
+<li>Hide UI fields dynamically</li>
+
+<li>Validate values before save</li>
+
+<li>Trigger logic when page loads</li>
+
+<li>Override controller behavior</li>
+
+</ul>
+
+<hr>
+
+<h3>18. Best Practices</h3>
+
+<ul>
+
+<li>Never modify core controller files.</li>
+
+<li>Use AppCustomization.js for all custom logic.</li>
+
+<li>Keep logic modular and reusable.</li>
+
+<li>Always test offline mode.</li>
+
+<li>Ensure logic does not break synchronization.</li>
+
+</ul>
+
+<div class="warning-box">
+Incorrect customization may break mobile synchronization with Maximo Manage.
+Always validate using both mobile simulator and device testing.
+</div>
+
+</br>
+<hr>
+
+<h2>JavaScript Fundamentals Required for Maximo Mobile Development</h2>
+
+<p>
+Maximo Mobile applications are built using the IBM Mobile Application Framework (MAF).
+Although developers mainly write customization logic in <b>AppCustomization.js</b>, understanding 
+JavaScript fundamentals is critical for implementing reliable and maintainable mobile customizations.
+</p>
+
+<hr>
+
+<h3>1. Variables (let, const)</h3>
+
+<p>
+Variables are used to store data values in JavaScript. Modern JavaScript uses <b>let</b> and <b>const</b> 
+instead of the older <b>var</b>.
+</p>
+
+<ul>
+<li><b>let</b> – Used when the value may change later.</li>
+<li><b>const</b> – Used when the value should remain constant.</li>
+</ul>
+
+<pre class="code-block">
+let priority = 3;
+priority = 4;
+
+const site = "BEDFORD";
+</pre>
+
+<p>
+Best practice: Use <b>const</b> by default and only use <b>let</b> when reassignment is required.
+</p>
+
+<hr>
+
+<h3>2. Functions</h3>
+
+<p>
+Functions are reusable blocks of code used to perform a specific task.
+Functions help organize business logic and make code reusable.
+</p>
+
+<pre class="code-block">
+function calculatePriority(impact, likelihood){
+
+    return impact * likelihood;
+
+}
+</pre>
+
+<p>
+Functions can accept parameters and return results.
+They are heavily used in Maximo Mobile customizations.
+</p>
+
+<hr>
+
+<h3>3. Arrow Functions</h3>
+
+<p>
+Arrow functions are a modern ES6 shorthand syntax for writing functions.
+They are commonly used in event handlers and asynchronous logic.
+</p>
+
+<pre class="code-block">
+const calculatePriority = (impact, likelihood) => {
+
+   return impact * likelihood;
+
+};
+</pre>
+
+<p>
+Arrow functions provide shorter syntax and automatically bind the context.
+</p>
+
+<hr>
+
+<h3>4. Objects</h3>
+
+<p>
+Objects store structured data as key-value pairs.
+Most data in Maximo Mobile (records, datasource objects, page metadata) are JavaScript objects.
+</p>
+
+<pre class="code-block">
+let workorder = {
+
+   wonum : "1001",
+   description : "Pump Maintenance",
+   status : "WAPPR"
+
+};
+</pre>
+
+<p>
+Object properties can be accessed using dot notation.
+</p>
+
+<pre class="code-block">
+console.log(workorder.description);
+</pre>
+
+<hr>
+
+<h3>5. Arrays</h3>
+
+<p>
+Arrays are used to store lists of values.
+Many Maximo datasets (records returned from datasource queries) are stored as arrays.
+</p>
+
+<pre class="code-block">
+let technicians = ["John","David","Maria"];
+</pre>
+
+<p>
+Accessing array elements:
+</p>
+
+<pre class="code-block">
+console.log(technicians[0]);
+</pre>
+
+<hr>
+
+<h3>6. Promises</h3>
+
+<p>
+Promises represent the result of an asynchronous operation.
+Operations like loading mobile data, syncing records, or calling APIs return promises.
+</p>
+
+<pre class="code-block">
+fetchData().then(result => {
+
+   console.log(result);
+
+});
+</pre>
+
+<p>
+Promises have three states:
+</p>
+
+<ul>
+<li>Pending</li>
+<li>Resolved</li>
+<li>Rejected</li>
+</ul>
+
+<hr>
+
+<h3>7. Async / Await</h3>
+
+<p>
+Async/Await is a modern way of handling asynchronous operations.
+It makes asynchronous code look like synchronous code, improving readability.
+</p>
+
+<pre class="code-block">
+async function loadWorkOrders(){
+
+   const data = await datasource.load();
+
+   console.log(data);
+
+}
+</pre>
+
+<p>
+Async/Await is widely used in Maximo Mobile controller and datasource logic.
+</p>
+
+<hr>
+
+<h3>8. ES6 Modules</h3>
+
+<p>
+JavaScript modules allow splitting code into reusable components.
+Modules are imported and exported using ES6 syntax.
+</p>
+
+<pre class="code-block">
+import WorkOrderService from './services/WorkOrderService';
+</pre>
+
+<p>
+This helps organize large applications into manageable code files.
+</p>
+
+<hr>
+
+<h3>9. Event Handling</h3>
+
+<p>
+Event handling allows code to respond to user actions such as button clicks, page loads, or field updates.
+</p>
+
+<pre class="code-block">
+button.addEventListener("click", function(){
+
+   console.log("Button clicked");
+
+});
+</pre>
+
+<p>
+Maximo Mobile relies heavily on event-driven logic.
+</p>
+
+<hr>
+
+<h2>React Basics for Maximo Mobile</h2>
+
+<p>
+Maximo Mobile UI components are built using React technology.
+Developers do not need deep React expertise but must understand basic concepts.
+</p>
+
+<hr>
+
+<h3>1. Components</h3>
+
+<p>
+React applications are built using components.
+A component represents a reusable UI element.
+</p>
+
+Examples:
+</p>
+
+<ul>
+<li>Work Order page</li>
+<li>Asset details page</li>
+<li>Inventory list page</li>
+</ul>
+
+<hr>
+
+<h3>2. Component Lifecycle</h3>
+
+<p>
+React components go through different lifecycle stages:
+</p>
+
+<ul>
+<li>Creation</li>
+<li>Rendering</li>
+<li>Updating</li>
+<li>Destruction</li>
+</ul>
+
+<p>
+Understanding lifecycle helps determine when custom logic should execute.
+</p>
+
+<hr>
+
+<h3>3. Props</h3>
+
+<p>
+Props are used to pass data between components.
+Props are read-only and cannot be modified by the receiving component.
+</p>
+
+&lt;pre class="code-block"&gt;
+&lt;MyComponent title="Work Order Details" /&gt;
+</pre>
+
+<hr>
+
+<h3>4. State</h3>
+
+<p>
+State represents dynamic data inside a component.
+When state changes, React automatically updates the UI.
+</p>
+
+Example:
+</p>
+
+<pre class="code-block">
+const [status, setStatus] = useState("WAPPR");
+</pre>
+
+<p>
+Updating state automatically triggers re-rendering.
+</p>
+
+<hr>
+
+<h3>5. Event Handlers</h3>
+
+<p>
+Event handlers allow components to respond to user interactions.
+</p>
+
+<pre class="code-block">
+<button onClick={handleClick}>Save</button>
+</pre>
+
+<hr>
+
+<h3>6. Hooks</h3>
+
+<p>
+Hooks allow developers to use state and lifecycle features inside functional components.
+</p>
+
+Common hooks:
+</p>
+
+<ul>
+<li><b>useState</b> – Manage component state</li>
+<li><b>useEffect</b> – Run logic during component lifecycle events</li>
+</ul>
+
+<hr>
+
+<h3>7. Component Rendering</h3>
+
+<p>
+Rendering is the process of displaying UI components.
+Whenever state or props change, React re-renders the component.
+</p>
+
+This ensures the UI always reflects the latest data.
+</p>
+
+<hr>
+
+<h2>Summary</h2>
+
+<ul>
+
+<li>JavaScript fundamentals are essential for writing mobile customization logic.</li>
+
+<li>React concepts help understand how mobile pages render and update.</li>
+
+<li>Maximo Mobile developers mostly work in <b>AppCustomization.js</b> and interact with page objects, datasources, and controllers.</li>
+
+<li>Understanding async operations and event-driven programming is critical for mobile applications.</li>
+
+</ul>
 
 `;
 }
