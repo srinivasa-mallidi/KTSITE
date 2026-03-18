@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SampleManager LIMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* ===== TOP NAVBAR ===== */
+.navbar {
+    position: fixed;
+    width: 100%;
+    background: #1e293b;
+    color: white;
+    display: flex;
+    overflow-x: auto;
+    z-index: 1000;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 14px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.navbar button:hover {
+    background: #334155;
+}
+
+/* ===== SECTION STYLE ===== */
+.section {
+    padding: 100px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.section h2 {
+    color: #1e293b;
+}
+
+/* spacing because navbar fixed */
+.spacer {
+    height: 60px;
+}
+
+/* ===== ACTIVE BUTTON ===== */
+.active {
+    background: #0ea5e9 !important;
+}
+</style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Header -->
+<header class="bg-gray-900 text-white p-4 shadow-lg">
+  <h1 class="text-2xl font-bold">LIMS Knowledge Portal</h1>
+</header>
+
+<!-- Layout -->
+<div class="flex h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-72 bg-gradient-to-b from-gray-900 to-gray-800 text-white p-5 overflow-y-auto">
+    
+    <ul class="space-y-3 text-lg">
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('sm21')">
+        🧪 Sample Manager 21.2
+      </li>
+
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('installation')">
+        ⚙️ Installation & Configuration
+      </li>
+
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('project')">
+        🚀 LIMS Sample Manager Project
+      </li>
+
+      <!--<li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('integration')">
+        🔗 Integration (SM-IDI / Data Manager)
+      </li>
+
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('flow')">
+        🔄 End-to-End Flow
+      </li>-->
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <div id="content" class="bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-2xl font-bold">Welcome</h2>
+      <p class="mt-2 text-gray-600">Select a section from the left panel.</p>
+    </div>
+  </main>
+
+</div>
+
+<script>
+
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+function loadContent(section) {
+  const content = document.getElementById('content');
+
+  const data = {
+    sm21: `
+
+    
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <button onclick="scrollToSection('file')">File</button>
+    <button onclick="scrollToSection('view')">View</button>
+    <button onclick="scrollToSection('setup')">Setup</button>
+    <button onclick="scrollToSection('lots')">Lots</button>
+    <button onclick="scrollToSection('jobs')">Jobs</button>
+    <button onclick="scrollToSection('samples')">Samples</button>
+    <button onclick="scrollToSection('tests')">Tests</button>
+    <button onclick="scrollToSection('results')">Results</button>
+    <button onclick="scrollToSection('worksheets')">Worksheets</button>
+    <button onclick="scrollToSection('batches')">Batches</button>
+    <button onclick="scrollToSection('incidents')">Incidents</button>
+    <button onclick="scrollToSection('chromeleon')">Chromeleon</button>
+    <button onclick="scrollToSection('lab')">Lab Execution</button>
+    <button onclick="scrollToSection('contract')">Contract Testing</button>
+    <button onclick="scrollToSection('plates')">Plates</button>
+    <button onclick="scrollToSection('datamanager')">Data Manager</button>
+    <button onclick="scrollToSection('smidi')">SM-IDI</button>
+    <button onclick="scrollToSection('sqc')">SQC</button>
+    <button onclick="scrollToSection('window')">Window</button>
+    <button onclick="scrollToSection('help')">Help</button>
+</div>
+<br><br><br><br>
+ <h2 class="text-2xl font-bold mb-4">SampleManager LIMS 21.2 – Detailed KT</h2>
+
+<p class="mb-4 text-gray-600">
+SampleManager LIMS is an enterprise laboratory management system used to manage samples, tests, results, workflows, and integrations with external systems like SAP and instruments.
+</p>
+
+<!-- ================= NAVIGATION BAR ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">1. Navigation Bar (Complete Overview)</h3>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-4 text-sm">
+File | View | Setup | Lots | Jobs | Samples | Tests | Results | Worksheets | Batches | Incidents | Chromeleon | Lab Execution | Contract Testing | Plates | Data Manager | SM-IDI | SQC | Window | Help
+</div>
+
+<p class="mb-4">
+Each menu represents a functional module. These are broadly classified into:
+</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Configuration:</b> Setup, Tests, Results</li>
+  <li><b>Operations:</b> Samples, Worksheets, Jobs</li>
+  <li><b>Integration:</b> SM-IDI, Data Manager, Chromeleon</li>
+  <li><b>Utilities:</b> File, View, Window, Help</li>
+</ul>
+<div class="spacer"></div>
+
+<!-- ===== SECTIONS ===== -->
+<div id="file" class="section">
+    <!-- ================= FILE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. File Menu</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Run – Execute commands</li>
+  <li>Lock Session – Lock current session</li>
+  <li>Rebuild Explorer – Refresh UI structure</li>
+  <li>Change User – Switch login</li>
+  <li>Reconnect – Reconnect session</li>
+  <li>Exit – Close application</li>
+</ul>
+
+<p class="mb-4 text-gray-600">👉 Used for session/system management (Not part of setup)</p>
+</div>
+
+<div id="view" class="section">
+    <!-- ================= VIEW ================= -->
+
+<h2 class="text-2xl font-bold mb-4">View Menu</h2>
+
+<p class="mb-4 text-gray-600">
+The View menu in SampleManager LIMS is used to control the user interface, navigation visibility, personalization, and display behavior. It does not affect business logic but significantly improves usability and navigation efficiency.
+</p>
+
+<!-- ================= OVERVIEW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">1. Overview</h3>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-4">
+Recent Items | Recent Commands | Up | Refresh | My Workspace | Quick Launcher | Explorer Column Hyperlinks | Show Removed | Show All Versions | Explorer Bar | Appearance | Select Fonts
+</div>
+
+<p class="mb-4">
+These options allow users to navigate quickly, customize UI layout, and manage how data is displayed in the Explorer.
+</p>
+
+---
+
+<!-- ================= RECENT ITEMS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Recent Items</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Displays recently accessed records (samples, jobs, results, etc.)</li>
+  <li>Helps users quickly reopen previously viewed data</li>
+</ul>
+
+<p class="mb-4 text-blue-600">
+👉 Useful for daily operations to reduce navigation time
+</p>
+
+---
+
+<!-- ================= RECENT COMMANDS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Recent Commands</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Shows recently executed actions</li>
+  <li>Example: sample login, result entry, report generation</li>
+</ul>
+
+<p class="mb-4">
+👉 Helps users quickly repeat frequent actions
+</p>
+
+---
+
+<!-- ================= UP ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Up</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Navigates one level up in the Explorer hierarchy</li>
+  <li>Similar to folder navigation in Windows</li>
+</ul>
+
+---
+
+<!-- ================= REFRESH ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Refresh</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Reloads current screen data</li>
+  <li>Ensures latest updates are visible</li>
+</ul>
+
+<p class="mb-4 text-blue-600">
+👉 Important when working with real-time updates or multi-user environments
+</p>
+
+---
+
+<!-- ================= MY WORKSPACE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. My Workspace</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Personal workspace for user-specific data</li>
+  <li>Stores frequently accessed items</li>
+</ul>
+
+<p class="mb-4">
+👉 Acts like a personal dashboard
+</p>
+
+---
+
+<!-- ================= QUICK LAUNCHER ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Quick Launcher</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Enables quick access shortcuts</li>
+  <li>Frequently used modules/actions can be launched directly</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+✔ Enabled option improves productivity
+</div>
+
+---
+
+<!-- ================= EXPLORER COLUMN HYPERLINKS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Explorer Column Hyperlinks</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Makes column values clickable in Explorer grid</li>
+  <li>Allows direct navigation to related records</li>
+</ul>
+
+<p class="mb-4 text-blue-600">
+👉 Very useful for quick drill-down navigation
+</p>
+
+---
+
+<!-- ================= SHOW REMOVED ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Show Removed</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Displays deleted/removed records</li>
+  <li>Useful for auditing and tracking changes</li>
+</ul>
+
+---
+
+<!-- ================= SHOW ALL VERSIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Show All Versions</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Displays all historical versions of records</li>
+  <li>Supports audit and compliance requirements</li>
+</ul>
+
+---
+
+<!-- ================= EXPLORER BAR ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Explorer Bar</h3>
+
+<p class="mb-2">Controls visibility of UI panels:</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Tasks</b> – Shows available actions</li>
+  <li><b>Navigator</b> – Tree structure navigation</li>
+  <li><b>Explorer Grid</b> – Main data display</li>
+  <li><b>Status</b> – System status information</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 These are toggle options (can enable/disable UI panels)
+</div>
+
+---
+
+<!-- ================= APPEARANCE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Appearance</h3>
+
+<p class="mb-2">Controls UI themes:</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>SampleManager XI</li>
+  <li>SampleManager Lab</li>
+  <li>SampleManager Bold</li>
+  <li>Dark Themes</li>
+  <li>Minimal / Minimal Dark</li>
+  <li>White / Light Gray / Gray / Dark Gray / Black</li>
+</ul>
+
+<p class="mb-4 text-blue-600">
+👉 Used to customize UI look and improve readability
+</p>
+
+---
+
+<!-- ================= SELECT FONTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Select Fonts</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Change font style and size</li>
+  <li>Improve readability based on user preference</li>
+</ul>
+
+---
+
+<!-- ================= SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. View Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>View menu is focused on UI customization and navigation</li>
+  <li>Does NOT impact business logic or configuration</li>
+  <li>Improves efficiency and usability</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-semibold">
+View Menu = UI Control + Navigation Enhancement
+</div>
+
+<hr>
+
+
+</div>
+
+<div id="setup" class="section">
+    <!-- ================= SETUP ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Setup Module </h2>
+
+<p class="mb-4 text-gray-600">
+The Setup module in SampleManager LIMS is the backbone of the system. It is used to configure master data, system behavior, workflows, templates, and integrations. All business logic and configurations originate from this module.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Setup = Configuration Layer + Master Data + System Behavior
+</div>
+
+<!-- ================= MAIN SECTIONS ================= -->
+<h3 class="text-xl font-semibold mb-3">1. Setup Menu Structure</h3>
+
+<ul class="list-disc ml-6 mb-6">
+  <li>Environment</li>
+  <li>Laboratory</li>
+  <li>Login</li>
+  <li>System</li>
+  <li>Scheduling</li>
+  <li>Analyst Notebook</li>
+  <li>Lab Table Sheet</li>
+  <li>Explorer</li>
+  <li>Commit</li>
+  <li>Auditor</li>
+  <li>Data Pipe</li>
+  <li>Integration</li>
+  <li>Interface</li>
+  <li>Workflow</li>
+</ul>
+
+---
+
+<!-- ================= ENVIRONMENT ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Environment</h3>
+
+<p class="mb-2">Defines physical and business context of lab operations.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Hazards</b> – Safety classifications for samples</li>
+  <li><b>Substance</b> – Chemical/material definitions</li>
+  <li><b>Molecule</b> – Molecular-level definitions</li>
+  <li><b>Locations</b> – Physical storage or lab locations</li>
+  <li><b>Location Types</b> – Types like freezer, lab bench</li>
+  <li><b>Preparations</b> – Sample preparation steps</li>
+  <li><b>Sample Points</b> – Source points (e.g., plant, site)</li>
+  <li><b>Projects</b> – Grouping of work</li>
+  <li><b>Customers</b> – Client details</li>
+  <li><b>Charges</b> – Billing configuration</li>
+  <li><b>Suppliers</b> – Vendor details</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 Used in Sample login → ensures proper classification and traceability
+</div>
+
+---
+
+<!-- ================= LABORATORY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Laboratory</h3>
+
+<p class="mb-2">Core lab configuration and testing logic.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Instruments</b> – Device configuration</li>
+  <li><b>Instrument Categories</b> – Grouping of instruments</li>
+  <li><b>Instrument Parts</b> – Components of instruments</li>
+  <li><b>Instrument Templates</b> – Reusable setups</li>
+  <li><b>Maintenance Update</b> – Calibration & maintenance tracking</li>
+</ul>
+
+<h4 class="font-semibold mt-3">Testing Configuration</h4>
+<ul class="list-disc ml-6 mb-4">
+  <li>Analyses – Defines tests</li>
+  <li>Calculations – Formula logic</li>
+  <li>Calculation Functions – Reusable functions</li>
+  <li>Units – Measurement units</li>
+  <li>Standards – Reference standards</li>
+  <li>Sig Figs – Precision rules</li>
+</ul>
+
+<h4 class="font-semibold mt-3">Advanced</h4>
+<ul class="list-disc ml-6 mb-4">
+  <li>AQC Chart – Quality control charts</li>
+  <li>Statistical Script – Statistical logic</li>
+</ul>
+
+<h4 class="font-semibold mt-3">Inventory & Lab Setup</h4>
+<ul class="list-disc ml-6 mb-4">
+  <li>Sample Container Types</li>
+  <li>Stock / Stock Batch / Inventory / Orders</li>
+  <li>Inspection Plans</li>
+  <li>Lab Methods</li>
+  <li>Certificate Templates</li>
+  <li>Rack Templates / Plate Types / Plate Layout</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 This is the MOST IMPORTANT section for real-time project work
+</div>
+
+---
+
+<!-- ================= LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Login</h3>
+
+<p class="mb-2">Controls templates used during sample/job creation.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Lot Templates</li>
+  <li>Job Templates</li>
+  <li>Sample Templates</li>
+  <li>Test Schedules</li>
+  <li>Work Profile</li>
+  <li>Batch Templates</li>
+  <li>Batch Sequence Template</li>
+  <li>Login Schedules</li>
+  <li>Syntaxes</li>
+  <li>Master Template</li>
+  <li>Entity Templates</li>
+  <li>Rules</li>
+  <li>Column Sets</li>
+  <li>Sample Plan</li>
+  <li>Sampling Procedures</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Controls how samples/jobs are created → very critical in automation
+</div>
+
+---
+
+<!-- ================= SYSTEM ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. System</h3>
+
+<p class="mb-2">Global configuration and administration.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Report Formats / Templates / Layouts</li>
+  <li>Labels & Barcode</li>
+  <li>Printers</li>
+  <li>Users / Operators</li>
+  <li>Languages / Translator</li>
+  <li>Sites / Groups / Roles</li>
+  <li>Training Courses</li>
+  <li>Master Menu</li>
+  <li>Column Definitions</li>
+  <li>Saved Criteria</li>
+  <li>Configuration</li>
+  <li>Plugins</li>
+  <li>Schema Layouts</li>
+  <li>Deploy Packages</li>
+  <li>Server Management</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Admin-level configuration (security + system behavior)
+</div>
+
+---
+
+<!-- ================= SCHEDULING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Scheduling</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Schedules</li>
+  <li>Schedule Groups</li>
+  <li>Calendar</li>
+  <li>Non-Working Periods</li>
+  <li>Watchdog Timer</li>
+  <li>Active Record Update</li>
+</ul>
+
+<p class="mb-4">
+👉 Used for automation and time-based execution (similar to cron jobs)
+</p>
+
+---
+
+<!-- ================= ANALYST NOTEBOOK ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Analyst Notebook</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Notebook Templates</li>
+  <li>Page Templates</li>
+  <li>Result Transcription</li>
+  <li>Search & Manage notebooks</li>
+</ul>
+
+<p class="mb-4">
+👉 Used for recording lab observations and manual entries
+</p>
+
+---
+
+<!-- ================= COMMIT ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Commit</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Toggle Mode</li>
+  <li>Change Table Set</li>
+  <li>Consign Definition</li>
+</ul>
+
+<p class="mb-4">
+👉 Controls committing configuration changes (like migration)
+</p>
+
+---
+
+<!-- ================= AUDITOR ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Auditor</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Configure</li>
+  <li>Explore</li>
+  <li>Report</li>
+  <li>Viewer</li>
+</ul>
+
+<p class="mb-4">
+👉 Used for audit trails and compliance tracking
+</p>
+
+---
+
+<!-- ================= DATA PIPE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Data Pipe</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Destinations</li>
+  <li>Dispatcher</li>
+  <li>Data Trail</li>
+</ul>
+
+<p class="mb-4">
+👉 Used for data movement and external communication
+</p>
+
+---
+
+<!-- ================= INTEGRATION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Integration</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Aliases</li>
+  <li>Data Sources</li>
+  <li>Mapping Scripts</li>
+  <li>Parsing Scripts</li>
+  <li>Import Definitions</li>
+  <li>Sweepers</li>
+</ul>
+
+<div class="bg-purple-100 p-3 rounded mb-4">
+👉 Core of inbound/outbound integrations (VERY IMPORTANT for projects)
+</div>
+
+---
+
+<!-- ================= INTERFACE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Interface</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Forms</li>
+  <li>Dashboard Definition</li>
+  <li>User Interface</li>
+  <li>Explorer</li>
+  <li>Portal</li>
+  <li>OData</li>
+  <li>HL7 Messaging</li>
+  <li>Master Menu</li>
+</ul>
+
+<p class="mb-4">
+👉 Controls UI customization and external interfaces
+</p>
+
+---
+
+<!-- ================= WORKFLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Workflow</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Definitions</li>
+  <li>Event Types</li>
+  <li>Action Types</li>
+  <li>States</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Defines business process flow (approval, status change, automation)
+</div>
+
+---
+
+<!-- ================= FINAL SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. Setup Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Setup module = heart of SampleManager</li>
+  <li>All configurations originate here</li>
+  <li>Used by Admin, Developer, and Functional teams</li>
+  <li>Direct impact on Samples, Tests, Results modules</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+SETUP = DATA MODEL + CONFIGURATION + AUTOMATION ENGINE
+</div>
+
+
+</div>
+
+<div id="lots" class="section">
+    <!-- ================= LOTS ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Lots Module</h2>
+
+<p class="mb-4 text-gray-600">
+A Lot in SampleManager LIMS represents a batch or group of materials/samples that share common characteristics such as source, production batch, or testing requirement. It acts as a parent entity for samples and helps in tracking, processing, and reporting at a batch level.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Lot = Batch / Group of Samples with Common Properties
+</div>
+
+---
+
+<!-- ================= WHAT IS LOT ================= -->
+<h3 class="text-xl font-semibold mb-2">1. What is a Lot?</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>A logical grouping of samples</li>
+  <li>Represents production batch / shipment / material group</li>
+  <li>Acts as parent for multiple samples</li>
+  <li>Used for tracking, processing, and reporting</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:  
+A chemical plant produces Batch #B123 → This becomes a LOT → Multiple samples are collected under this lot
+</div>
+
+---
+
+<!-- ================= LOT HIERARCHY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Lot Hierarchy</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Lot → Samples → Tests → Results
+</div>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Lot = Parent</li>
+  <li>Samples = Child records</li>
+  <li>Tests = Assigned to samples</li>
+  <li>Results = Output of tests</li>
+</ul>
+
+---
+
+<!-- ================= LOT MENU OPTIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Lot Menu Options</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Lots</li>
+  <li>Login</li>
+  <li>Workflow Login</li>
+  <li>Process</li>
+  <li>Edit Attachments</li>
+</ul>
+
+---
+
+<!-- ================= OPEN LOTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Open Lots</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Used to search and open existing lots</li>
+  <li>Displays lot details, status, samples</li>
+</ul>
+
+<p class="mb-4 text-blue-600">
+👉 Entry point to view/manage existing lot data
+</p>
+
+---
+
+<!-- ================= LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Login</h3>
+
+<p class="mb-2">Used to create or manage lots manually.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Login</b> – Create new lot</li>
+  <li><b>Display</b> – View lot details</li>
+  <li><b>Modify</b> – Edit lot data</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 This is where lot is initially created
+</div>
+
+---
+
+<!-- ================= WORKFLOW LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Workflow Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Creates lots using predefined workflows</li>
+  <li>Automatically assigns templates, rules, and processes</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Used in automated environments (preferred in projects)
+</div>
+
+---
+
+<!-- ================= PROCESS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Process</h3>
+
+<p class="mb-2">Controls lifecycle of a lot.</p>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Review</b> – Check data</li>
+  <li><b>Compare with MLP</b> – Validate against specifications</li>
+  <li><b>Complete</b> – Mark lot as finished</li>
+  <li><b>Cancel</b> – Reject lot</li>
+  <li><b>Authorize</b> – Final approval</li>
+  <li><b>Review Inventory</b> – Check stock</li>
+  <li><b>Reconcile Inventory</b> – Match expected vs actual</li>
+  <li><b>Lot Review</b> – Final audit</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 This represents business workflow (VERY IMPORTANT)
+</div>
+
+---
+
+<!-- ================= ATTACHMENTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Edit Attachments</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Add documents to lot</li>
+  <li>Attach reports, certificates, images</li>
+</ul>
+
+---
+
+<!-- ================= LOT FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Lot Lifecycle Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Lot Creation → Sample Creation → Testing → Result Entry → Review → Approval → Completion
+</div>
+
+---
+
+<!-- ================= REAL TIME USAGE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Real-Time Project Usage</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Used in manufacturing batch tracking</li>
+  <li>Helps in regulatory compliance</li>
+  <li>Supports bulk operations</li>
+  <li>Improves traceability</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Oil Refinery → Lot = Tank Batch → Samples collected → Tests performed → Results approved → Lot closed
+</div>
+
+---
+
+<!-- ================= IMPORTANT POINTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Important Points</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Lot is optional but widely used</li>
+  <li>Not all samples require a lot</li>
+  <li>Helps in grouping and reporting</li>
+  <li>Works closely with Sample & Workflow modules</li>
+</ul>
+
+---
+
+<!-- ================= LOT SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Lot = Parent entity for samples</li>
+  <li>Controls batch-level processing</li>
+  <li>Supports workflow and approvals</li>
+  <li>Critical for industries like pharma, oil, chemicals</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+LOT = BATCH MANAGEMENT + TRACEABILITY + WORKFLOW CONTROL
+</div>
+
+</div>
+
+<div id="jobs" class="section">
+    <!-- ================= JOBS ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Jobs Module </h2>
+
+<p class="mb-4 text-gray-600">
+A Job in SampleManager LIMS represents a request for analysis or testing. It acts as a container for one or more samples and defines the purpose, scope, and workflow of testing activities.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Job = Testing Request / Work Order
+</div>
+
+---
+
+<!-- ================= WHAT IS JOB ================= -->
+<h3 class="text-xl font-semibold mb-2">1. What is a Job?</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Represents a testing request</li>
+  <li>Contains multiple samples</li>
+  <li>Defines workflow and processing rules</li>
+  <li>Acts as a central tracking entity</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:  
+Customer sends water samples → One Job is created → Multiple samples under that job
+</div>
+
+---
+
+<!-- ================= JOB STRUCTURE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Job Structure</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Job → Samples → Tests → Results
+</div>
+
+---
+
+<!-- ================= MENU OPTIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Job Menu Options</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Jobs</li>
+  <li>Login</li>
+  <li>Workflow Login</li>
+  <li>Sample Plan Login</li>
+  <li>Process</li>
+  <li>Reporting</li>
+  <li>Parameters</li>
+  <li>Edit Attachments</li>
+</ul>
+
+---
+
+<!-- ================= OPEN JOBS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Open Jobs</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Search and open existing jobs</li>
+  <li>View job details, status, samples</li>
+</ul>
+
+---
+
+<!-- ================= LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>New Job</b> – Create new job</li>
+  <li><b>Add to Old Job</b> – Add samples to existing job</li>
+  <li><b>Display</b> – View job details</li>
+  <li><b>Modify</b> – Edit job</li>
+  <li><b>Copy Job and Samples</b> – Duplicate job structure</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Main entry point for job creation
+</div>
+
+---
+
+<!-- ================= WORKFLOW LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Workflow Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Creates job using predefined workflows</li>
+  <li>Auto-assigns templates and tests</li>
+  <li>Ensures standard process execution</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Used in production environments
+</div>
+
+---
+
+<!-- ================= SAMPLE PLAN LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Sample Plan Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li><b>Job Login</b></li>
+  <li><b>Job Login Edit</b></li>
+  <li><b>Environmental Login</b></li>
+  <li><b>Show Trigger Path</b></li>
+</ul>
+
+<p class="mb-4 text-gray-600">
+Used for predefined sampling plans (especially environmental or regulatory scenarios)
+</p>
+
+---
+
+<!-- ================= PROCESS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Process</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Job Overview</li>
+  <li>Suspend / Unsuspend</li>
+  <li>Complete</li>
+  <li>Compare with MLP</li>
+  <li>Authorize</li>
+  <li>Cancel</li>
+  <li>Reactivate</li>
+  <li>Commit with Samples</li>
+  <li>Deconsign Active</li>
+  <li>Archive</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Controls job lifecycle (VERY IMPORTANT)
+</div>
+
+---
+
+<!-- ================= REPORTING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Reporting</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Print</li>
+  <li>Print with Samples</li>
+  <li>List</li>
+</ul>
+
+---
+
+<!-- ================= PARAMETERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Parameters</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Add Parameters</li>
+  <li>Modify Parameters</li>
+</ul>
+
+<p class="mb-4 text-gray-600">
+Used to define additional attributes for jobs (custom fields)
+</p>
+
+---
+
+<!-- ================= ATTACHMENTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Edit Attachments</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Attach documents, reports, files</li>
+</ul>
+
+---
+
+<!-- ================= JOB FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Job Lifecycle Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Job Creation → Sample Login → Testing → Results → Review → Authorization → Completion
+</div>
+
+---
+
+<!-- ================= REAL TIME ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Real-Time Usage</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Customer sample requests</li>
+  <li>Internal lab testing</li>
+  <li>Environmental monitoring</li>
+  <li>Quality control processes</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Client submits request → Job created → Samples logged → Tests executed → Results approved → Job closed
+</div>
+
+---
+
+<!-- ================= IMPORTANT ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. Key Points</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Job is request-level entity</li>
+  <li>Contains multiple samples</li>
+  <li>Controls workflow and approvals</li>
+  <li>Highly used in all projects</li>
+</ul>
+
+---
+
+<!-- ================= JOBS SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">15. Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Job = Request / Work Order</li>
+  <li>Drives sample creation</li>
+  <li>Controls lifecycle</li>
+  <li>Central entity in LIMS</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+JOB = REQUEST + WORKFLOW + SAMPLE CONTAINER
+</div>
+
+</div>
+
+<div id="samples" class="section">
+    <!-- ================= SAMPLES ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Samples Module</h2>
+
+<p class="mb-4 text-gray-600">
+Sample is the core entity in SampleManager LIMS representing the physical material collected for testing. All laboratory operations revolve around samples.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Sample = Physical Testing Unit
+</div>
+
+---
+
+<!-- ================= SAMPLE BASICS ================= -->
+<h3 class="text-xl font-semibold mb-2">1. What is a Sample?</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Represents actual material collected</li>
+  <li>Belongs to a Job</li>
+  <li>Contains tests and results</li>
+  <li>Tracked through lifecycle</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example: One Job → 5 Samples → Each sample tested separately
+</div>
+
+---
+
+<!-- ================= MENU OPTIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Sample Menu Options</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Samples</li>
+  <li>Login</li>
+  <li>Workflow Login</li>
+  <li>Process</li>
+  <li>Barcode</li>
+  <li>Retains</li>
+  <li>Tracking</li>
+  <li>Sample Inventory</li>
+  <li>Reporting</li>
+  <li>Parameters</li>
+  <li>Edit Attachments</li>
+</ul>
+
+---
+
+<!-- ================= LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Login Sample</li>
+  <li>Template-based login</li>
+  <li>Create New Job from Sample</li>
+  <li>Add to Old Job</li>
+  <li>Display Sample / Full Sample</li>
+  <li>Modify Sample / Full Sample</li>
+  <li>Edit Tests</li>
+  <li>Print Receipt / Labels</li>
+  <li>Activate / Deactivate Schedule</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Main entry point for sample creation
+</div>
+
+---
+
+<!-- ================= WORKFLOW LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Workflow Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Login Sample via workflow</li>
+  <li>Split Sample</li>
+  <li>Modify / Display Sample</li>
+  <li>Login Job from Sample</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Used for automated lab processes
+</div>
+
+---
+
+<!-- ================= PROCESS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Process (VERY IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Sample Overview</li>
+  <li>Change Priority</li>
+  <li>Move Sample</li>
+  <li>Change Job</li>
+  <li>Receive Sample</li>
+  <li>Release Held Sample</li>
+  <li>Complete Preparation</li>
+  <li>Complete Sample</li>
+  <li>Compare with MLP</li>
+  <li>Authorize Sample</li>
+  <li>Cancel Sample</li>
+  <li>Reactivate Sample</li>
+  <li>Resample</li>
+  <li>Commit Sample</li>
+  <li>Deconsign Sample</li>
+  <li>Archive</li>
+  <li>Inspection (Submit, Inspect, History)</li>
+  <li>Suspend / Unsuspend Sample</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Controls full lifecycle of sample (CRITICAL FOR PROJECT)
+</div>
+
+---
+
+<!-- ================= BARCODE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Barcode</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Receive Samples</li>
+  <li>Move Samples</li>
+  <li>Assign to Batch</li>
+  <li>Expire Samples</li>
+  <li>Dispose Samples</li>
+  <li>Modify Properties</li>
+  <li>Barcode Launchpad</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 Used for scanning-based operations in lab
+</div>
+
+---
+
+<!-- ================= RETAINS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Retains</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Test Retain Sample</li>
+  <li>Expire</li>
+  <li>Dispose</li>
+</ul>
+
+<p class="text-gray-600 mb-4">
+Retain samples are stored for future reference or audit
+</p>
+
+---
+
+<!-- ================= TRACKING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Tracking</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Sample Status</li>
+  <li>Sample Tree</li>
+  <li>Specify Instrument</li>
+  <li>Specify Customer</li>
+  <li>Specify Location</li>
+  <li>View Sample Audits</li>
+  <li>Chain of Custody Report</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Helps in traceability & compliance
+</div>
+
+---
+
+<!-- ================= SAMPLE INVENTORY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Sample Inventory</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Sample Picking List</li>
+  <li>Container Labels</li>
+  <li>Location Sample Containers</li>
+</ul>
+
+---
+
+<!-- ================= REPORTING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Reporting</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Active Samples</li>
+  <li>Suspended Samples</li>
+  <li>Overdue Samples</li>
+  <li>Under Testing</li>
+  <li>Near Expiry Samples</li>
+  <li>Ready for Disposal</li>
+  <li>Retain Sample Report</li>
+  <li>Tabular Reports</li>
+</ul>
+
+---
+
+<!-- ================= PARAMETERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Parameters</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Start Execution</li>
+  <li>Test Executions</li>
+  <li>Add Parameters</li>
+  <li>Modify Parameters</li>
+</ul>
+
+---
+
+<!-- ================= ATTACHMENTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Attachments</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Attach files to sample</li>
+</ul>
+
+---
+
+<!-- ================= SAMPLE FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Sample Lifecycle Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Login → Receive → Assign Tests → Perform Testing → Enter Results → Authorize → Complete → Archive
+</div>
+
+---
+
+<!-- ================= REAL TIME ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. Real-Time Usage</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Sample collection in lab</li>
+  <li>Barcode scanning during testing</li>
+  <li>Tracking sample movement</li>
+  <li>Regulatory audit compliance</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Sample collected → Logged → Tested → Approved → Stored → Disposed
+</div>
+
+---
+
+<!-- ================= KEY POINTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">15. Key Points</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Most important entity in LIMS</li>
+  <li>Directly linked to tests & results</li>
+  <li>Tracks lifecycle and status</li>
+  <li>Supports barcode and audit tracking</li>
+</ul>
+
+---
+
+<!-- ================= SAMPLE SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">16. Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Sample = Physical testing unit</li>
+  <li>Central to all lab operations</li>
+  <li>Controls testing workflow</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+SAMPLE = EXECUTION + TESTING + TRACKING
+</div>
+
+</div>
+
+<div id="tests" class="section">
+    <!-- ================= TESTS ================= -->
+
+
+
+<h2 class="text-2xl font-bold mb-4">Tests Module </h2>
+
+<p class="mb-4 text-gray-600">
+Tests define what analysis needs to be performed on a sample. They contain parameters, limits, calculations, and validation rules.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Test = What to Check + How to Validate
+</div>
+
+---
+
+<!-- ================= WHAT IS TEST ================= -->
+<h3 class="text-xl font-semibold mb-2">1. What is a Test?</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Represents an analysis performed on a sample</li>
+  <li>Contains parameters (fields)</li>
+  <li>Defines limits and validation rules</li>
+  <li>Produces results</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example: Water Sample → Test: pH → Result: 7.2
+</div>
+
+---
+
+<!-- ================= MENU OPTIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Test Menu Options</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Tests</li>
+  <li>Login</li>
+  <li>Process</li>
+  <li>Parameters</li>
+  <li>Edit Attachments</li>
+</ul>
+
+---
+
+<!-- ================= LOGIN ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Login</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Edit Tests</li>
+  <li>Display Tests</li>
+</ul>
+
+<p class="text-gray-600 mb-4">
+Used to view or modify tests assigned to samples
+</p>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Tests are usually auto-assigned via templates/workflows
+</div>
+
+---
+
+<!-- ================= PROCESS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Process (VERY IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Test Overview</li>
+  <li>Complete Early</li>
+  <li>Complete Preparation</li>
+  <li>Reactivate</li>
+  <li>Suspend</li>
+  <li>Unsuspend</li>
+  <li>Authorize</li>
+  <li>Cancel</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Controls test lifecycle
+</div>
+
+---
+
+<!-- ================= PARAMETERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Parameters (CORE LOGIC)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Start Execution</li>
+  <li>Add Parameters</li>
+  <li>Modify Parameters</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Parameters = fields where results are entered (VERY IMPORTANT)
+</div>
+
+---
+
+<!-- ================= ATTACHMENTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Attachments</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Attach documents to tests</li>
+</ul>
+
+---
+
+<!-- ================= TEST FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Test Lifecycle Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Assigned → Start Execution → Enter Results → Validate → Authorize → Complete
+</div>
+
+---
+
+<!-- ================= PARAMETERS DETAILS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Parameters Explained</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Numeric (e.g., pH value)</li>
+  <li>Text (e.g., observation)</li>
+  <li>Calculated fields</li>
+  <li>Limits (min/max)</li>
+  <li>Units (mg/L, °C)</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Parameter: pH  
+Value: 7.2  
+Limit: 6.5 – 8.5 → Valid
+</div>
+
+---
+
+<!-- ================= VALIDATION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Validation & Rules</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Limit checking</li>
+  <li>Auto calculations</li>
+  <li>Status updates</li>
+  <li>Flagging invalid results</li>
+</ul>
+
+---
+
+<!-- ================= REAL TIME ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Real-Time Usage</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Lab analyst enters results</li>
+  <li>System validates against limits</li>
+  <li>Supervisor authorizes</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Sample → Test assigned → Analyst enters value → System validates → Approved
+</div>
+
+---
+
+<!-- ================= KEY POINTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Key Points</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines what to test</li>
+  <li>Holds all calculation logic</li>
+  <li>Controls validation</li>
+  <li>Directly impacts results</li>
+</ul>
+
+---
+
+<!-- =================  SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. TEST Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Test = Analysis logic</li>
+  <li>Contains parameters & rules</li>
+  <li>Produces validated results</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+TEST = LOGIC + VALIDATION + RESULT GENERATION
+</div>
+
+
+</div>
+
+<div id="results" class="section">
+    <!-- ================= RESULTS ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Results Module</h2>
+
+<p class="mb-4 text-gray-600">
+Results represent the final output of tests performed on samples. This module is responsible for result entry, validation, authorization, and reporting.
+</p>
+
+<div class="bg-gray-100 p-4 rounded-lg mb-6 text-center font-semibold">
+Result = Final Output of Testing
+</div>
+
+---
+
+<!-- ================= WHAT IS RESULT ================= -->
+<h3 class="text-xl font-semibold mb-2">1. What is a Result?</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Value entered for a test parameter</li>
+  <li>Derived from test execution</li>
+  <li>Validated against limits</li>
+  <li>Used for reporting & integration</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example: Test = Temperature → Result = 25°C
+</div>
+
+---
+
+<!-- ================= MENU ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Result Menu Options</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Entry</li>
+  <li>Display</li>
+  <li>Authorization</li>
+  <li>Modify Result List</li>
+  <li>Calculator</li>
+  <li>Reporting</li>
+  <li>Certificates</li>
+</ul>
+
+---
+
+<!-- ================= ENTRY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Entry (VERY IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Entry by Job</li>
+  <li>Entry by Sample</li>
+  <li>Entry by Test</li>
+  <li>Entry by Spreadsheet</li>
+  <li>Entry by Job Spreadsheet</li>
+  <li>Entry by Criteria</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 This is where analysts enter results
+</div>
+
+---
+
+<!-- ================= DISPLAY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Display</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Result Overview</li>
+  <li>Display by Job</li>
+  <li>Display by Sample</li>
+  <li>Display by Test</li>
+  <li>Display by Spreadsheet</li>
+  <li>Display by Criteria</li>
+</ul>
+
+---
+
+<!-- ================= AUTHORIZATION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Authorization (CRITICAL)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Authorize by Job</li>
+  <li>Authorize by Sample</li>
+  <li>Authorize by Test</li>
+  <li>Authorize by Spreadsheet</li>
+  <li>Authorize by Criteria</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Final approval step before results are released
+</div>
+
+---
+
+<!-- ================= MODIFY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Modify Result List</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Edit result entries</li>
+  <li>Correct mistakes</li>
+</ul>
+
+---
+
+<!-- ================= CALCULATOR ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Calculator</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Perform calculations on results</li>
+  <li>Apply formulas</li>
+</ul>
+
+---
+
+<!-- ================= REPORTING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Reporting</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Ad-Hoc Reporter</li>
+  <li>Report Templates</li>
+  <li>Data Tree</li>
+  <li>Sample Reports</li>
+</ul>
+
+---
+
+<!-- ================= CERTIFICATES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Certificates</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Create Certificate</li>
+  <li>Modify Certificate</li>
+  <li>Submit</li>
+  <li>Approve</li>
+  <li>Authorize</li>
+  <li>Inspection History</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Final document shared with customer
+</div>
+
+---
+
+<!-- ================= FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Result Lifecycle Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Enter Result → Validate → Review → Authorize → Report → Certificate
+</div>
+
+---
+
+<!-- ================= VALIDATION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Validation Logic</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Limit checking (min/max)</li>
+  <li>Auto calculations</li>
+  <li>Pass/Fail determination</li>
+  <li>Error flags</li>
+</ul>
+
+---
+
+<!-- ================= REAL TIME ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Real-Time Usage</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Lab analyst enters result</li>
+  <li>System validates</li>
+  <li>Supervisor authorizes</li>
+  <li>Data sent to external systems (SAP)</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+Example:
+Sample tested → Result entered → Validated → Authorized → Sent to SAP
+</div>
+
+---
+
+<!-- ================= KEY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Key Points</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Final output of system</li>
+  <li>Drives business decisions</li>
+  <li>Used for integration</li>
+  <li>Requires authorization</li>
+</ul>
+
+---
+
+<!-- ================= SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. Results Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Result = Final value</li>
+  <li>Validated using test rules</li>
+  <li>Authorized before release</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+RESULT = OUTPUT + VALIDATION + INTEGRATION
+</div>
+
+</div>
+
+<div id="worksheets" class="section">
+    <!-- ================= WORKSHEETS ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Worksheets Module</h2>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Analysis</li>
+  <li>Sample</li>
+  <li>Sample Preparation</li>
+  <li>Test Preparation</li>
+</ul>
+
+<p>👉 Used for bulk result entry (Lab execution)</p>
+</div>
+
+<div id="batches" class="section">
+    <!-- ================= BATCHES ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Batches Module</h2>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Login</li>
+  <li>Process</li>
+  <li>Reporting</li>
+</ul>
+</div>
+
+<div id="incidents" class="section">
+    <!-- ================= INCIDENTS ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Incidents Module</h2>
+<ul class="list-disc ml-6 mb-4">
+  <li>Workflow Login</li>
+  <li>Process</li>
+</ul>
+
+<p>👉 Track lab issues</p>
+</div>
+
+<div id="chromeleon" class="section">
+    <!-- ================= CHROMELEON ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Chromeleon Module</h2>
+<ul class="list-disc ml-6 mb-4">
+  <li>Servers</li>
+  <li>Mapping</li>
+  <li>Sequences</li>
+  <li>Instrument Status</li>
+</ul>
+
+<p>👉 Instrument integration module</p>
+</div>
+
+<div id="lab" class="section">
+    <!-- ================= LAB EXECUTION ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Lab Execution Module</h2>
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Executions</li>
+  <li>Login</li>
+  <li>Process</li>
+  <li>Authorization</li>
+</ul>
+
+<p>👉 SOP-driven workflows</p>
+</div>
+
+<div id="contract" class="section">
+    
+<!-- ================= CONTRACT ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Contract Testing Module</h2>
+<ul class="list-disc ml-6 mb-4">
+  <li>Currencies</li>
+  <li>Price Lists</li>
+  <li>Customers</li>
+  <li>Projects</li>
+  <li>Invoices</li>
+</ul>       
+</div>
+
+<div id="plates" class="section">
+    <!-- ================= PLATES ================= -->
+
+<h2 class="text-2xl font-bold mb-4">Plates Module</h2>
+<ul class="list-disc ml-6 mb-4">
+  <li>Login</li>
+  <li>Process</li>
+  <li>Result Entry</li>
+</ul>
+</div>
+
+<div id="datamanager" class="section">
+    <!-- ================= DATA MANAGER ================= -->
+
+
+<h2 class="text-2xl font-bold mb-4">Data Manager</h2>
+
+<p class="mb-4 text-gray-600">
+Data Manager is the integration and data exchange module in SampleManager LIMS. It enables communication between external systems (instruments, SAP, MES) and the LIMS database.
+</p>
+
+<div class="bg-gray-100 p-4 rounded mb-6 text-center font-semibold">
+DATA MANAGER = DATA IMPORT + EXPORT + AUTOMATION
+</div>
+
+<!-- ================= DATA PACKAGES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">1. Data Packages (CORE COMPONENT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Represents a unit of data exchange</li>
+  <li>Contains mapping between external data and LIMS fields</li>
+  <li>Used for both inbound and outbound integration</li>
+</ul>
+
+<p class="font-semibold">Options:</p>
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Data Packages – View existing packages</li>
+  <li>Modify – Update mappings</li>
+  <li>Display – View configuration</li>
+  <li>Delete – Remove package</li>
+  <li>ReConvert – Reprocess data</li>
+  <li>ReMap – Reapply mapping</li>
+  <li>Download Items / Files – Export data</li>
+  <li>View Items – Check processed data</li>
+  <li>Sign Data Package – Approve package</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 MOST IMPORTANT for SAP / Instrument integration
+</div>
+
+---
+
+<!-- ================= PACKAGING RULES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Packaging Rules</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines how data is grouped into packages</li>
+  <li>Controls structure of outgoing data</li>
+  <li>Used in outbound integrations</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Example: Group results by Sample / Job before sending to SAP
+</div>
+
+---
+
+<!-- ================= RULE TEMPLATES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Rule Templates</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Reusable templates for packaging rules</li>
+  <li>Speeds up configuration</li>
+</ul>
+
+---
+
+<!-- ================= PROPERTY SCRIPTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Property Scripts (VERY IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Custom logic using scripts</li>
+  <li>Used to transform data</li>
+  <li>Mapping + calculations</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 This is where developers write logic
+</div>
+
+---
+
+<!-- ================= PACKAGE PROPERTIES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Package Properties</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines metadata of packages</li>
+  <li>Controls behavior of data exchange</li>
+</ul>
+
+---
+
+<!-- ================= SERVER COMPUTERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Server Computers</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines servers handling data processing</li>
+  <li>Used for centralized execution</li>
+</ul>
+
+---
+
+<!-- ================= DATA DESTINATIONS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Data Destinations (CRITICAL)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines where data is sent</li>
+  <li>Examples: SAP, MES, File System</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Required for outbound integration
+</div>
+
+---
+
+<!-- ================= AGENT COMPUTERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Agent Computers</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Machines executing data transfer</li>
+  <li>Acts as processing nodes</li>
+</ul>
+
+---
+
+<!-- ================= CAPTURE SOURCES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Capture Sources</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines input source of data</li>
+  <li>Examples: Instrument files, APIs</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 Required for inbound integration
+</div>
+
+---
+
+<!-- ================= CAPTURE INTERVAL ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Capture Interval</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines frequency of data capture</li>
+  <li>Example: Every 5 minutes</li>
+</ul>
+
+---
+
+<!-- ================= CLIENT COMPUTERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Client Computers</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>End-user machines</li>
+  <li>Used for interaction with system</li>
+</ul>
+
+---
+
+<!-- ================= MONITORING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. Monitoring</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Event Viewer – Logs</li>
+  <li>Agent Computer Status</li>
+  <li>Capture Source Status</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 Used for troubleshooting
+</div>
+
+---
+
+<!-- ================= SEARCH ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. Search</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Search Data Packages</li>
+  <li>Search Data Items</li>
+</ul>
+
+---
+
+<!-- ================= HELP ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">14. Help</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Data Manager Help</li>
+  <li>Instrument Converters Help</li>
+</ul>
+
+---
+
+<!-- ================= FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">15. Integration Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Capture Source → Data Package → Mapping → Validation → Destination
+</div>
+
+---
+
+<!-- ================= INBOUND ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">16. Inbound Flow</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Capture Source receives data</li>
+  <li>Data Package processes it</li>
+  <li>Mapped to LIMS tables</li>
+</ul>
+
+---
+
+<!-- ================= OUTBOUND ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">17. Outbound Flow</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Results generated in LIMS</li>
+  <li>Packaging Rules applied</li>
+  <li>Sent to Data Destination (SAP)</li>
+</ul>
+
+---
+
+<!-- ================= SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">18.Data Manager Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Core integration engine</li>
+  <li>Handles inbound & outbound</li>
+  <li>Uses Data Packages + Rules + Scripts</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+DATA MANAGER = HEART OF INTEGRATION
+</div>
+
+
+</div>
+
+<div id="smidi" class="section">
+    <!-- ================= SM-IDI ================= -->
+
+<h2 class="text-2xl font-bold mb-4">SM-IDI (Integration Engine)</h2>
+
+<p class="mb-4 text-gray-600">
+SM-IDI is the integration layer of SampleManager LIMS. It manages communication, mapping, processing, and background execution of data between external systems and LIMS.
+</p>
+
+<div class="bg-gray-100 p-4 rounded mb-6 text-center font-semibold">
+SM-IDI = CONFIGURATION + MAPPING + PROCESSING + MONITORING
+</div>
+
+<!-- ================= SERVERS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">1. Servers</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines integration servers</li>
+  <li>Controls connection to external systems</li>
+  <li>Manages execution environment</li>
+</ul>
+
+<p class="font-semibold">Options:</p>
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Server – View server details</li>
+  <li>Add – Create new server</li>
+  <li>Modify – Update server config</li>
+  <li>Remove / Restore – Manage lifecycle</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 FIRST STEP in integration setup
+</div>
+
+---
+
+<!-- ================= CONFIGURATION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">2. Configuration</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Global configuration settings</li>
+  <li>Controls behavior of integration engine</li>
+</ul>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>All Configuration Items</li>
+  <li>Server Configuration</li>
+  <li>Query Configuration</li>
+</ul>
+
+---
+
+<!-- ================= OBJECTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">3. Objects</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines data structures</li>
+  <li>Represents entities (Sample, Result, Job)</li>
+</ul>
+
+<p class="font-semibold">Options:</p>
+<ul class="list-disc ml-6 mb-4">
+  <li>Add / Modify objects</li>
+  <li>Define fields and structure</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Used in mapping layer
+</div>
+
+---
+
+<!-- ================= MAPPING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">4. Mapping (MOST IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Defines field-to-field mapping</li>
+  <li>Maps external data → LIMS tables</li>
+</ul>
+
+<p class="font-semibold">Options:</p>
+<ul class="list-disc ml-6 mb-4">
+  <li>Open Map</li>
+  <li>Open Map Details</li>
+  <li>Add / Modify mapping</li>
+  <li>Criteria Add / Modify</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 HEART OF INTEGRATION LOGIC
+</div>
+
+---
+
+<!-- ================= INSPECTION LOTS ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">5. Inspection Lots</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Represents SAP QM Inspection Lots</li>
+  <li>Used in SAP integration</li>
+</ul>
+
+---
+
+<!-- ================= PROCESSING ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">6. Processing</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Executes integration processes</li>
+</ul>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>QM Download Lot</li>
+  <li>QM Phrase Interactive</li>
+  <li>Process Lot</li>
+  <li>Upload Search Results</li>
+  <li>Upload All</li>
+</ul>
+
+<div class="bg-green-100 p-3 rounded mb-4">
+👉 Used to trigger actual data flow
+</div>
+
+---
+
+<!-- ================= BACKGROUND SERVICES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">7. Background Services</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Automated execution of integration</li>
+  <li>Runs in background</li>
+</ul>
+
+<p class="font-semibold">Options:</p>
+<ul class="list-disc ml-6 mb-4">
+  <li>Add / Modify services</li>
+  <li>Control scheduling</li>
+</ul>
+
+<div class="bg-blue-100 p-3 rounded mb-4">
+👉 Like CRON jobs in Maximo
+</div>
+
+---
+
+<!-- ================= TEST CONNECTION ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">8. Test Connection</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Check connectivity with external system</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 ALWAYS test before integration
+</div>
+
+---
+
+<!-- ================= CLEANUP ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">9. Cleanup</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Remove old data</li>
+  <li>Maintain system performance</li>
+</ul>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Jobs</li>
+  <li>Samples</li>
+  <li>ERP Requests</li>
+  <li>SMP Sessions</li>
+  <li>Downtimes</li>
+</ul>
+
+---
+
+<!-- ================= LOG FILES ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">10. Log Files (VERY IMPORTANT)</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Used for debugging</li>
+</ul>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Logfiles</li>
+  <li>DataFiles</li>
+  <li>Issues Logs</li>
+  <li>TimerQueue Logs</li>
+  <li>Batch Service Logs</li>
+</ul>
+
+<div class="bg-red-100 p-3 rounded mb-4">
+👉 FIRST place to check when integration fails
+</div>
+
+---
+
+<!-- ================= INTERACTIVE ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">11. Interactive</h3>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Manual execution of processes</li>
+</ul>
+
+<ul class="list-disc ml-6 mb-4">
+  <li>Download Lot</li>
+  <li>Process Lot</li>
+  <li>Upload Queued Results</li>
+</ul>
+
+<div class="bg-yellow-100 p-3 rounded mb-4">
+👉 Used for testing / debugging
+</div>
+
+---
+
+<!-- ================= FLOW ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">12. End-to-End Flow</h3>
+
+<div class="bg-gray-100 p-4 rounded mb-4">
+Server → Object → Mapping → Processing → Background Service → Logs
+</div>
+
+---
+
+<!-- ================= SUMMARY ================= -->
+<h3 class="text-xl font-semibold mt-6 mb-2">13. SM-IDI Summary</h3>
+
+<ul class="list-disc ml-6">
+  <li>Core integration control layer</li>
+  <li>Handles SAP/MES/Instrument integration</li>
+  <li>Uses mapping + processing + services</li>
+</ul>
+
+<div class="bg-gray-100 p-4 rounded-lg mt-4 text-center font-bold">
+SM-IDI = BRAIN OF INTEGRATION
+</div>
+
+
+</div>
+
+<div id="sqc" class="section">
+    <h2>SQC</h2>
+</div>
+
+<div id="window" class="section">
+    <h2>Window</h2>
+</div>
+
+<div id="help" class="section">
+    <h2>Help</h2>
+</div>
+
+    `,
+
+    installation: `
+      <h2 class="text-2xl font-bold mb-3">Installation & Configuration</h2>
+      <p>KT from existing environments (GLC, DR, NTR)</p>
+      
+    `,
+
+    project: `
+      <h2 class="text-2xl font-bold mb-3">LIMS Sample Manager Project</h2>
+      <p>Your current project knowledge base</p>
+      
+    `,
+
+    integration: `
+      <h2 class="text-2xl font-bold mb-3">Integration</h2>
+      <p>SM-IDI & Data Manager</p>
+      
+    `,
+
+    flow: `
+      <h2 class="text-2xl font-bold mb-3">End-to-End Flow</h2>
+      
+    `
+  };
+
+  content.innerHTML = data[section];
+}
+</script>
+
+</body>
+</html>
