@@ -91,7 +91,7 @@ td {
 
 <!-- Header -->
 <header class="bg-gray-900 text-white p-4 shadow-lg">
-  <h1 class="text-2xl font-bold">LIMS Knowledge Portal</h1>
+  <h1 class="text-2xl font-bold" >LIMS Knowledge Portal</h1>
 </header>
 
 <!-- Layout -->
@@ -145,8 +145,216 @@ td {
   <!-- Main Content -->
   <main class="flex-1 p-6 overflow-y-auto">
     <div id="content" class="bg-white p-6 rounded-2xl shadow">
-      <h2 class="text-2xl font-bold">Welcome</h2>
-      <p class="mt-2 text-gray-600">Select a section from the left panel.</p>
+     <div class="card integration">
+
+<h2>🏢 SampleManager Multi-Site Implementation – Project Context</h2>
+
+<p>
+The SampleManager LIMS system is already installed, configured, and running in a production environment.
+The current version in use is <b>SampleManager 21.2</b>.
+</p>
+
+<p>
+This is not a fresh implementation. The system is already live and supports existing business operations.
+The current effort focuses on extending the system to support additional sites.
+</p>
+
+</div>
+
+
+<div class="card process">
+
+<h2>📍 Existing System Landscape</h2>
+
+<table>
+<tr><th>Site</th><th>Status</th></tr>
+<tr><td>GLC</td><td>Active</td></tr>
+<tr><td>LHH</td><td>Active</td></tr>
+</table>
+
+<p>
+Both existing sites are fully functional and include:
+</p>
+
+<ul>
+<li>Sample lifecycle configurations</li>
+<li>Test and specification setup</li>
+<li>Workflow and approval logic</li>
+<li>SAP integration</li>
+<li>MES integration</li>
+<li>Instrument integration</li>
+</ul>
+
+</div>
+
+
+<div class="card process">
+
+<h2>🆕 New Site Onboarding Requirement</h2>
+
+<p>
+Business requirement is to onboard additional laboratory sites into the existing SampleManager system.
+</p>
+
+<table>
+<tr><th>Site</th><th>Status</th></tr>
+<tr><td>DER</td><td>New</td></tr>
+<tr><td>NTR</td><td>New</td></tr>
+</table>
+
+</div>
+
+
+<div class="card integration">
+
+<h2>⚙️ Implementation Approach</h2>
+
+
+<ul>
+<li>Identify reusable configurations from existing sites</li>
+<li>Replicate core setup (samples, tests, workflows)</li>
+<li>Apply site-specific adjustments where required</li>
+<li>Configure integrations for new sites</li>
+</ul>
+
+<p>
+Focus is on maintaining consistency across sites while allowing flexibility for site-specific variations.
+</p>
+
+</div>
+
+
+<div class="card process">
+
+<h2>🔁 Configuration Areas</h2>
+
+<h3>Sample Management</h3>
+<ul>
+<li>Sample login templates</li>
+<li>Sample types and categories</li>
+<li>Status workflows</li>
+</ul>
+
+<h3>Test & Specification Setup</h3>
+<ul>
+<li>Test definitions</li>
+<li>Specification limits</li>
+<li>Inspection plans</li>
+</ul>
+
+<h3>Workflow & Approval</h3>
+<ul>
+<li>Result validation rules</li>
+<li>Approval processes</li>
+<li>Usage decision logic</li>
+</ul>
+
+<h3>Labeling & Tracking</h3>
+<ul>
+<li>Barcode label formats</li>
+<li>Sample tracking configuration</li>
+</ul>
+
+</div>
+
+
+<div class="card integration">
+
+<h2>🔌 Integration Considerations</h2>
+
+<h3>SAP Integration</h3>
+<ul>
+<li>Lot creation and synchronization</li>
+<li>Plant/site mapping</li>
+<li>Results and usage decision updates</li>
+</ul>
+
+<h3>MES Integration</h3>
+<ul>
+<li>Event-based sample triggering</li>
+<li>File/message handling</li>
+<li>Sample status updates</li>
+</ul>
+
+<h3>Instrument Integration</h3>
+<ul>
+<li>Result data import from instruments</li>
+<li>File-based or interface-based integration</li>
+</ul>
+
+</div>
+
+
+<div class="card decision">
+
+<h2>🔀 Site-Specific Considerations</h2>
+
+<ul>
+<li>Different materials or product types per site</li>
+<li>Variation in test limits and specifications</li>
+<li>Different laboratory instruments</li>
+<li>Site-specific workflows or approval hierarchies</li>
+</ul>
+
+<p>
+Configuration decisions must balance reuse and customization to avoid duplication while maintaining flexibility.
+</p>
+
+</div>
+
+
+<div class="card process">
+
+<h2>📊 Data Segregation ??????</h2>
+
+<p>
+Although multiple sites exist within the same system, data must be logically separated.
+</p>
+
+<ul>
+<li>Site-based data filtering</li>
+<li>User access control per site</li>
+<li>Reporting based on site context</li>
+</ul>
+
+</div>
+
+
+<div class="card integration">
+
+<h2>🔄 Relation with Process Flows</h2>
+
+<p>
+All process flows implemented in existing sites (GLC, LHH) such as:
+</p>
+
+<ul>
+<li>Bulk Loading (TD Shipment)</li>
+<li>Production Order (Fill / Blend)</li>
+<li>Other processes (WE / UM / EP / QC)</li>
+</ul>
+
+<p>
+will be extended to new sites (DER, NTR) with appropriate configuration and mapping.
+</p>
+
+</div>
+
+
+<div class="card process">
+
+<h2>🧩 Key Activities</h2>
+
+<ul>
+<li>Understanding existing configurations from GLC and LHH</li>
+<li>Identifying reusable components</li>
+<li>Configuring new site data</li>
+<li>Setting up integrations for new sites</li>
+<li>Testing (SIT / UAT)</li>
+<li>Documentation and knowledge transfer</li>
+</ul>
+
+</div>
     </div>
   </main>
 
@@ -3746,8 +3954,8 @@ based on MES triggers and SAP production data.
 <!-- ================= DIAGRAM ================= -->
 <div class="card">
 <h2>📊 Process Flow Diagram</h2>
-<img src="others-flow-1.png" class="diagram">
-<img src="others-flow-2.png" class="diagram">
+<img src="img/glc-others-1.png" class="diagram">
+<img src="img/glc-others-2.png" class="diagram">
 </div>
 
 <!-- ================= OVERVIEW ================= -->
@@ -4064,13 +4272,13 @@ real-time SAP transactional data.
 
     installation: `
       <h2 class="text-2xl font-bold mb-3">Installation & Configuration</h2>
-      <p>KT from existing environments (GLC, DR, NTR)</p>
+      
       
     `,
 
     project: `
       <h2 class="text-2xl font-bold mb-3">LIMS Sample Manager Project</h2>
-      <p>Your current project knowledge base</p>
+      
       
     `,
 
