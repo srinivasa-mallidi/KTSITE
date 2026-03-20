@@ -6,58 +6,86 @@
   <title>SampleManager LIMS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-/* ===== GLOBAL ===== */
+
 body {
+    font-family: "Segoe UI", Arial;
     margin: 0;
-    font-family: Arial, sans-serif;
-    scroll-behavior: smooth;
+    background: #f4f6f9;
+    color: #333;
 }
 
-/* ===== TOP NAVBAR ===== */
-.navbar {
-    position: fixed;
-    width: 100%;
-    background: #1e293b;
+/* HEADER */
+header {
+    background: #0f172a;
     color: white;
-    display: flex;
-    overflow-x: auto;
-    z-index: 1000;
+    padding: 25px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
 }
 
-.navbar button {
-    background: none;
-    border: none;
-    color: white;
-    padding: 14px 16px;
-    cursor: pointer;
-    white-space: nowrap;
+/* LAYOUT */
+section {
+    padding: 25px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
-
-.navbar button:hover {
-    background: #334155;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-/* ===== SECTION STYLE ===== */
-.section {
-    padding: 100px 20px;
-    border-bottom: 1px solid #ddd;
+/* COLORS */
+.process { border-left: 6px solid #2563eb; }
+.decision { border-left: 6px solid #f59e0b; }
+.integration { border-left: 6px solid #10b981; }
+
+/* TEXT */
+h2 { color: #1e40af; }
+h3 { color: #0f766e; }
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th {
+    background: #1e293b;
+    color: white;
+    padding: 8px;
+}
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
 }
 
-.section h2 {
-    color: #1e293b;
+/* IMAGE */
+.diagram {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
-/* spacing because navbar fixed */
-.spacer {
-    height: 60px;
+/* TAG */
+.tag {
+    display:inline-block;
+    background:#e0f2fe;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:12px;
+    margin:2px;
 }
 
-/* ===== ACTIVE BUTTON ===== */
-.active {
-    background: #0ea5e9 !important;
-}
 </style>
+
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -75,6 +103,10 @@ body {
     <ul class="space-y-3 text-lg">
       <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('sm21')">
         🧪 Sample Manager 21.2
+      </li>
+      
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('glc_all_process_flowv2')">
+        🔗 GLC All Process Flow V2 
       </li>
 
       <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('installation')">
@@ -2388,6 +2420,193 @@ SM-IDI = BRAIN OF INTEGRATION
 
     `,
 
+    glc_all_process_flowv2:`
+<header>
+GLC End-to-End Process Flow (SAP ↔ SampleManager ↔ MES)
+</header>
+
+<section>
+
+<!-- ================= IMAGE SECTION ================= -->
+<div class="card">
+<h2>📊 Process Flow Diagram</h2>
+
+<p>Below diagrams represent complete integration flow between SAP, SampleManager, and MES:</p>
+
+<img src="flow1.png" class="diagram">
+
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="card integration">
+<h2>1. High-Level Overview</h2>
+
+<p>
+This process defines a <b>complete lifecycle of sample management</b> integrating:
+</p>
+
+<ul>
+<li><b>SAP</b> → Lot Creation & Business Decisions</li>
+<li><b>MES</b> → Event Triggering & Sample Lifecycle Updates</li>
+<li><b>SampleManager (LIMS)</b> → Core system managing samples, tests, results</li>
+</ul>
+
+<h3>🔁 End-to-End Flow</h3>
+<ul>
+<li>MES triggers sample events</li>
+<li>SAP provides lot data</li>
+<li>SampleManager manages full lifecycle</li>
+<li>Lab performs testing</li>
+<li>Results & decisions pushed back to SAP & MES</li>
+</ul>
+</div>
+
+<!-- ================= STEP 1 ================= -->
+<div class="card integration">
+<h2>2. MES File Trigger Layer</h2>
+
+<table>
+<tr><th>Entity</th><th>Details</th></tr>
+<tr><td>Files</td><td>TD, AF, HE, WE, UM, EP, QC</td></tr>
+<tr><td>Purpose</td><td>Trigger sample login & label printing</td></tr>
+<tr><td>Input</td><td>Production events from MES</td></tr>
+<tr><td>Output</td><td>Sample creation requests</td></tr>
+<tr><td>Processing</td><td>Parsed via Integration Manager</td></tr>
+<tr><td>SampleManager Module</td><td>Integration Manager + Workflow</td></tr>
+</table>
+
+<p>
+<span class="tag">TD → Bulk Loading</span>
+<span class="tag">AF → Packed Filling</span>
+<span class="tag">HE → Blending</span>
+</p>
+</div>
+
+<!-- ================= LOT ================= -->
+<div class="card process">
+<h2>3. SAP → SampleManager Lot Flow</h2>
+
+<table>
+<tr><th>Entity</th><th>Description</th></tr>
+<tr><td>Lot Created</td><td>Production lot created in SAP</td></tr>
+<tr><td>Lot Downloaded</td><td>Lot synced to SampleManager</td></tr>
+<tr><td>Process Lot</td><td>Initialize inspection process</td></tr>
+<tr><td>Inspection Plan</td><td>Tests assigned to lot</td></tr>
+</table>
+
+<p><b>Modules:</b> SM-IDI, Tests, Specifications</p>
+</div>
+
+<!-- ================= SAMPLE ================= -->
+<div class="card process">
+<h2>4. Sample Lifecycle</h2>
+
+<table>
+<tr><th>Step</th><th>Details</th></tr>
+<tr><td>Sample Login</td><td>Samples created as "Unavailable"</td></tr>
+<tr><td>Label Printing</td><td>Barcode labels generated</td></tr>
+<tr><td>Field Collection</td><td>Samples collected physically</td></tr>
+<tr><td>Scan Label</td><td>Barcode scanned</td></tr>
+<tr><td>Sample Sent</td><td>Moved to lab</td></tr>
+<tr><td>Sample Received</td><td>Status → Available</td></tr>
+</table>
+
+<p><b>Modules:</b> Sample Login, Label Printing, Workflow</p>
+</div>
+
+<!-- ================= MES ================= -->
+<div class="card integration">
+<h2>5. MES Updates</h2>
+
+<table>
+<tr><th>Data</th><th>Description</th></tr>
+<tr><td>Sampled Date</td><td>Sent to MES</td></tr>
+<tr><td>Received Date</td><td>Sent to MES</td></tr>
+<tr><td>SLA Trigger</td><td>Time tracking started</td></tr>
+</table>
+</div>
+
+<!-- ================= LAB ================= -->
+<div class="card process">
+<h2>6. Lab Processing</h2>
+
+<table>
+<tr><th>Entity</th><th>Details</th></tr>
+<tr><td>Scan Sample</td><td>Technician scans sample</td></tr>
+<tr><td>Instrument Testing</td><td>Test performed</td></tr>
+<tr><td>Result Entry</td><td>Manual / Auto entry</td></tr>
+<tr><td>Integration Manager</td><td>Sends results to SM</td></tr>
+</table>
+
+<p><b>Modules:</b> Lab Execution, Instrument Integration, Results</p>
+</div>
+
+<!-- ================= DECISION ================= -->
+<div class="card decision">
+<h2>7. Decision Logic</h2>
+
+<table>
+<tr><th>Decision</th><th>Logic</th></tr>
+<tr><td>Result Type</td><td>Short-term / Long-term</td></tr>
+<tr><td>All Results On-Spec?</td><td>Check limits</td></tr>
+<tr><td>Manual UD Required?</td><td>If off-spec</td></tr>
+<tr><td>Waiver Decision</td><td>Accept with exception</td></tr>
+</table>
+</div>
+
+<!-- ================= FINAL ================= -->
+<div class="card integration">
+<h2>8. Final Updates</h2>
+
+<table>
+<tr><th>System</th><th>Action</th></tr>
+<tr><td>SAP</td><td>Results + Usage Decision</td></tr>
+<tr><td>MES</td><td>Released Date Update</td></tr>
+<tr><td>SampleManager</td><td>Final status update</td></tr>
+</table>
+</div>
+
+<!-- ================= ROLES ================= -->
+<div class="card">
+<h2>9. User Roles</h2>
+<ul>
+<li>Field Operator → Sample collection</li>
+<li>Lab Technician → Testing</li>
+<li>QA Analyst → Result validation</li>
+<li>Supervisor → Approval / Waiver</li>
+</ul>
+</div>
+
+<!-- ================= ERRORS ================= -->
+<div class="card">
+<h2>10. Validations & Errors</h2>
+<ul>
+<li>Missing label → Cannot process sample</li>
+<li>Test not assigned → Failure in execution</li>
+<li>Out-of-spec → Manual intervention</li>
+<li>Integration failure → Retry / logging</li>
+</ul>
+</div>
+
+<!-- ================= SUMMARY ================= -->
+<div class="card integration">
+<h2>11. Final Summary</h2>
+
+<p>
+This process ensures <b>complete traceability, automation, and quality control</b> across systems.
+</p>
+
+<ul>
+<li>End-to-end integration (SAP ↔ MES ↔ SM)</li>
+<li>Automated sample lifecycle</li>
+<li>Real-time tracking</li>
+<li>Strong compliance & audit readiness</li>
+</ul>
+</div>
+
+</section>
+    `,
+
     installation: `
       <h2 class="text-2xl font-bold mb-3">Installation & Configuration</h2>
       <p>KT from existing environments (GLC, DR, NTR)</p>
@@ -2415,6 +2634,8 @@ SM-IDI = BRAIN OF INTEGRATION
   content.innerHTML = data[section];
 }
 </script>
+
+
 
 </body>
 </html>
