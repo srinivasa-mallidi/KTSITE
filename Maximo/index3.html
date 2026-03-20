@@ -108,6 +108,15 @@ td {
       <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('glc_all_process_flowv2')">
         🔗 GLC All Process Flow V2 
       </li>
+      
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('glc_bulk_loading_tdship')">
+        🔗 GLC Bulk Loading TDShipment 
+      </li>
+
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('glc_prod_order_fillblend')">
+        🔗 GLC Production Order Fill Blend 
+      </li>
+
 
       <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('installation')">
         ⚙️ Installation & Configuration
@@ -2433,7 +2442,8 @@ GLC End-to-End Process Flow (SAP ↔ SampleManager ↔ MES)
 
 <p>Below diagrams represent complete integration flow between SAP, SampleManager, and MES:</p>
 
-<img src="flow1.png" class="diagram">
+<img src="img/flow1.png" class="diagram">
+<img src="img/flow2.png" class="diagram">
 
 </div>
 
@@ -2566,31 +2576,238 @@ This process defines a <b>complete lifecycle of sample management</b> integratin
 </table>
 </div>
 
-<!-- ================= ROLES ================= -->
-<div class="card">
-<h2>9. User Roles</h2>
-<ul>
-<li>Field Operator → Sample collection</li>
-<li>Lab Technician → Testing</li>
-<li>QA Analyst → Result validation</li>
-<li>Supervisor → Approval / Waiver</li>
-</ul>
-</div>
+<!-- ================= ADVANCED DECISION FLOW ================= -->
+<div class="card decision">
 
-<!-- ================= ERRORS ================= -->
-<div class="card">
-<h2>10. Validations & Errors</h2>
+<h2>🔍 Advanced Decision & SAP Integration Flow</h2>
+
+<p>
+This section represents the <b>critical decision-making layer</b> of the system where test results are evaluated, 
+business rules are applied, and final outcomes are integrated with SAP and MES.
+</p>
+
+<h3>🧭 Step-by-Step Detailed Flow</h3>
+
+<table>
+<tr>
+<th>Step</th>
+<th>Entity</th>
+<th>Purpose</th>
+<th>Input</th>
+<th>Output</th>
+<th>SampleManager Module</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Results Entered into Samples</td>
+<td>Capture test results (manual/auto)</td>
+<td>Instrument data / user input</td>
+<td>Validated results</td>
+<td>Results Entry + Instrument Integration</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Trigger SLA</td>
+<td>Track turnaround time for tests</td>
+<td>Sample received timestamp</td>
+<td>SLA timer activated</td>
+<td>Workflow / Business Rules</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Result Type Decision</td>
+<td>Determine Long-term or Short-term processing</td>
+<td>Test configuration</td>
+<td>Routing decision</td>
+<td>Workflow Logic</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>All STC Complete?</td>
+<td>Check if all short-term characteristics completed</td>
+<td>Test results</td>
+<td>Yes/No decision</td>
+<td>Validation Rules</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Send "All STC Complete" to MES</td>
+<td>Notify MES about completion</td>
+<td>Completion status</td>
+<td>MES update</td>
+<td>Integration Manager</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Long-Term Results → SAP</td>
+<td>Send long-term results</td>
+<td>Final results</td>
+<td>SAP updated</td>
+<td>SM-IDI Integration</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>All Results On-Spec?</td>
+<td>Validate results within limits</td>
+<td>Test results + specs</td>
+<td>Yes/No</td>
+<td>Specs + Validation Engine</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>Manual UD Required</td>
+<td>Enable manual decision for off-spec</td>
+<td>Off-spec results</td>
+<td>Manual UD flag</td>
+<td>Workflow + Approval</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Run OffSpec Test</td>
+<td>Re-evaluate or confirm failure</td>
+<td>Failed results</td>
+<td>Re-tested result</td>
+<td>Tests Module</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>OnSpec / OffSpec Decision</td>
+<td>Final classification</td>
+<td>Retest result</td>
+<td>Status decision</td>
+<td>Business Rules</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>Accepted with Waiver?</td>
+<td>Allow exception handling</td>
+<td>Supervisor decision</td>
+<td>Yes/No</td>
+<td>Approval Workflow</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Send Waiver # with UD</td>
+<td>Send waiver approval to SAP</td>
+<td>Waiver ID</td>
+<td>SAP updated</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>Results & Manual Usage Decision → SAP</td>
+<td>Final business decision</td>
+<td>All results + UD</td>
+<td>SAP update</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>Released Date Updated in SM</td>
+<td>Mark sample as completed</td>
+<td>Final approval</td>
+<td>Release status</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>Send Released Date to MES</td>
+<td>Notify MES</td>
+<td>Release date</td>
+<td>MES updated</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>Box # Updated in SM</td>
+<td>Storage tracking</td>
+<td>Storage info</td>
+<td>Updated location</td>
+<td>Sample Tracking</td>
+</tr>
+
+</table>
+
+---
+
+<h3>🔀 Decision Points Explained</h3>
+
 <ul>
-<li>Missing label → Cannot process sample</li>
-<li>Test not assigned → Failure in execution</li>
-<li>Out-of-spec → Manual intervention</li>
-<li>Integration failure → Retry / logging</li>
+<li><b>Result Type:</b> Determines routing → Long-term vs Short-term</li>
+<li><b>All STC Complete:</b> Ensures all required tests done</li>
+<li><b>On-Spec Check:</b> Compares against specification limits</li>
+<li><b>Waiver Decision:</b> Allows exception handling</li>
 </ul>
+
+---
+
+<h3>🔁 Data Flow Summary</h3>
+
+<table>
+<tr><th>From</th><th>To</th><th>Data</th></tr>
+<tr><td>SampleManager</td><td>MES</td><td>SLA, Sample Status</td></tr>
+<tr><td>SampleManager</td><td>SAP</td><td>Results, Usage Decision</td></tr>
+<tr><td>Lab</td><td>SampleManager</td><td>Test Results</td></tr>
+</table>
+
+---
+
+<h3>👥 User Roles</h3>
+
+<ul>
+<li>Lab Technician → Performs testing</li>
+<li>QA Analyst → Validates results</li>
+<li>Supervisor → Approves waiver / UD</li>
+<li>System → Integration & automation</li>
+</ul>
+
+---
+
+<h3>⚠️ Validation & Error Scenarios</h3>
+
+<ul>
+<li>❌ Missing results → Cannot proceed to decision</li>
+<li>❌ Out-of-spec → Manual intervention required</li>
+<li>❌ Integration failure → SAP/MES mismatch</li>
+<li>❌ Waiver not approved → Sample rejected</li>
+</ul>
+
+---
+
+<h3>💡 Key Insight</h3>
+
+<p>
+This section is the <b>core business decision engine</b> of SampleManager:
+</p>
+
+<ul>
+<li>Ensures quality compliance</li>
+<li>Controls release decisions</li>
+<li>Drives SAP integration</li>
+<li>Handles exception (waiver) scenarios</li>
+</ul>
+
 </div>
 
 <!-- ================= SUMMARY ================= -->
 <div class="card integration">
-<h2>11. Final Summary</h2>
+<h2>Final Summary</h2>
 
 <p>
 This process ensures <b>complete traceability, automation, and quality control</b> across systems.
@@ -2604,8 +2821,917 @@ This process ensures <b>complete traceability, automation, and quality control</
 </ul>
 </div>
 
+
+
 </section>
     `,
+
+    glc_bulk_loading_tdship:`
+    
+    <header>
+GLC Bulk Loading (TD Shipment) – SAP ↔ SampleManager ↔ MES
+</header>
+
+<section>
+
+<!-- ================= DIAGRAM ================= -->
+<div class="card">
+<h2>📊 Process Flow Diagram</h2>
+<img src="img/td-flow-1.png" class="diagram">
+<img src="img/td-flow-2.png" class="diagram">
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="card integration">
+
+<h2>🧠 What is GLC Bulk Loading (TD Shipment) Flow?</h2>
+
+<p>
+This flow represents the <b>end-to-end lifecycle of a sample</b> during a 
+<b>Bulk Loading (TD Shipment)</b> process.
+</p>
+
+<p>
+It explains how three major systems work together:
+</p>
+
+<ul>
+<li><b>SAP</b> → Creates production lot</li>
+<li><b>MES</b> → Triggers sampling and tracks events</li>
+<li><b>SampleManager (LIMS)</b> → Manages samples, tests, results, and decisions</li>
+</ul>
+
+<br>
+<h2>1. High-Level Overview</h2>
+
+<p>
+This process represents the <b>Bulk Loading (TD Shipment)</b> lifecycle where:
+</p>
+
+<ul>
+<li>SAP creates a production lot</li>
+<li>SampleManager manages sample lifecycle</li>
+<li>MES triggers sampling events and tracks status</li>
+<li>Lab performs testing and updates results</li>
+<li>Final decisions flow back to SAP and MES</li>
+</ul>
+
+<p>
+It ensures <b>end-to-end traceability, automation, and quality compliance</b>.
+</p>
+
+
+</div>
+
+<!-- ================= STEP FLOW ================= -->
+<div class="card process">
+<h2>2. Step-by-Step Detailed Flow</h2>
+
+<table>
+<tr>
+<th>Step</th>
+<th>Entity</th>
+<th>Purpose</th>
+<th>Input</th>
+<th>Output</th>
+<th>Processing</th>
+<th>SampleManager Module</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Truck Load Complete</td>
+<td>Trigger production completion</td>
+<td>Operational event</td>
+<td>Lot creation trigger</td>
+<td>Event raised</td>
+<td>External (MES/SAP)</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Lot Created in SAP</td>
+<td>Create batch record</td>
+<td>Production data</td>
+<td>Lot ID</td>
+<td>Batch generation</td>
+<td>Integration (SM-IDI)</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Lot Downloaded in SM</td>
+<td>Sync lot into LIMS</td>
+<td>Lot ID</td>
+<td>LIMS record</td>
+<td>Data import</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Process Lot</td>
+<td>Initialize processing</td>
+<td>Lot data</td>
+<td>Active lot</td>
+<td>Workflow trigger</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Inspection Plan Created</td>
+<td>Assign tests</td>
+<td>Material + config</td>
+<td>Test plan</td>
+<td>Auto assignment</td>
+<td>Tests + Specs</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Test Container Unknown?</td>
+<td>Validation</td>
+<td>Container info</td>
+<td>Yes/No</td>
+<td>Decision check</td>
+<td>Business Rules</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>Add Test to First Sample</td>
+<td>Fallback logic</td>
+<td>Missing config</td>
+<td>Test assigned</td>
+<td>Manual mapping</td>
+<td>Tests</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>MES File Sent</td>
+<td>Trigger sample login</td>
+<td>TD file</td>
+<td>Sample request</td>
+<td>File parsing</td>
+<td>Integration Manager</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Samples Logged (Unavailable)</td>
+<td>Create sample</td>
+<td>MES trigger</td>
+<td>Sample ID</td>
+<td>Sample creation</td>
+<td>Sample Login</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Labels Printed</td>
+<td>Generate barcode</td>
+<td>Sample ID</td>
+<td>Labels</td>
+<td>Print job</td>
+<td>Label Printing</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>Labels Received in Field</td>
+<td>Distribute labels</td>
+<td>Printed labels</td>
+<td>Field availability</td>
+<td>Manual handling</td>
+<td>External</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Labels Scanned</td>
+<td>Capture sampling</td>
+<td>Barcode</td>
+<td>Sampled data</td>
+<td>Scan event</td>
+<td>Mobile Integration</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>Sampled Date Updated</td>
+<td>Record sampling time</td>
+<td>Scan event</td>
+<td>Date stored</td>
+<td>Update SM</td>
+<td>Sample Login</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>Send Sampled Date to MES</td>
+<td>Sync data</td>
+<td>Sample date</td>
+<td>MES update</td>
+<td>Integration call</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>Samples Sent to Lab</td>
+<td>Move sample</td>
+<td>Collected sample</td>
+<td>Lab transfer</td>
+<td>Physical movement</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>Lab Scans Label</td>
+<td>Receive sample</td>
+<td>Barcode</td>
+<td>Received event</td>
+<td>Scan</td>
+<td>Lab Execution</td>
+</tr>
+
+<tr>
+<td>17</td>
+<td>Sample Status → Available</td>
+<td>Enable testing</td>
+<td>Scan event</td>
+<td>Status update</td>
+<td>Status change</td>
+<td>Sample Login</td>
+</tr>
+
+<tr>
+<td>18</td>
+<td>Send Received Date to MES</td>
+<td>Notify MES</td>
+<td>Received date</td>
+<td>MES update</td>
+<td>Integration</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>19</td>
+<td>Results Entered</td>
+<td>Record results</td>
+<td>Test data</td>
+<td>Results</td>
+<td>Manual/auto entry</td>
+<td>Results Module</td>
+</tr>
+
+<tr>
+<td>20</td>
+<td>Integration Manager Sends Results</td>
+<td>Sync results</td>
+<td>Results</td>
+<td>System update</td>
+<td>Integration push</td>
+<td>Integration Manager</td>
+</tr>
+
+<tr>
+<td>21</td>
+<td>Result Type Decision</td>
+<td>Route flow</td>
+<td>Test config</td>
+<td>Long/Short</td>
+<td>Logic</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>22</td>
+<td>All Results On-Spec?</td>
+<td>Validate</td>
+<td>Results</td>
+<td>Yes/No</td>
+<td>Spec check</td>
+<td>Specs Engine</td>
+</tr>
+
+<tr>
+<td>23</td>
+<td>Manual UD Required</td>
+<td>Enable approval</td>
+<td>Off-spec</td>
+<td>Flag</td>
+<td>Rule trigger</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>24</td>
+<td>Run OffSpec Test</td>
+<td>Re-test</td>
+<td>Failed results</td>
+<td>New results</td>
+<td>Execution</td>
+<td>Tests</td>
+</tr>
+
+<tr>
+<td>25</td>
+<td>Waiver Decision</td>
+<td>Accept exception</td>
+<td>Supervisor input</td>
+<td>Yes/No</td>
+<td>Approval</td>
+<td>Approval Workflow</td>
+</tr>
+
+<tr>
+<td>26</td>
+<td>Send Results to SAP</td>
+<td>Update ERP</td>
+<td>Final results</td>
+<td>SAP update</td>
+<td>Integration</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>27</td>
+<td>Release Date Updated</td>
+<td>Close sample</td>
+<td>Approval</td>
+<td>Release</td>
+<td>Status update</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>28</td>
+<td>Send Release to MES</td>
+<td>Notify MES</td>
+<td>Release date</td>
+<td>MES update</td>
+<td>Integration</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>29</td>
+<td>Box Storage Updated</td>
+<td>Track storage</td>
+<td>Box ID</td>
+<td>Location update</td>
+<td>Tracking</td>
+<td>Sample Tracking</td>
+</tr>
+
+</table>
+</div>
+
+
+
+<!-- ================= SIMPLE STORY ================= -->
+
+<div class="card process">
+
+<h2>📖 Flow Explained as a Simple Story</h2>
+
+<p>
+Imagine a <b>truck is loaded with material</b>. Before using it, we must test its quality.
+This flow shows how that testing happens step-by-step.
+</p>
+
+</div>
+
+<!-- ================= STEP FLOW ================= -->
+
+<div class="card process">
+
+<h2>🚀 Step-by-Step Flow (Simple Understanding)</h2>
+
+<ol>
+
+<li>
+<b>Production Completed (Truck Load)</b><br>
+SAP creates a <b>Lot (Batch)</b> → Example: LOT12345
+</li>
+
+<li>
+<b>Lot sent to SampleManager</b><br>
+System prepares <b>Inspection Plan</b> (which tests to perform)
+</li>
+
+<li>
+<b>MES triggers sampling</b><br>
+MES sends TD Shipment file → tells system to create samples
+</li>
+
+<li>
+<b>Sample Created in LIMS</b><br>
+Sample status = <b>Unavailable</b>
+</li>
+
+<li>
+<b>Label Printing</b><br>
+Barcode labels generated for tracking samples
+</li>
+
+<li>
+<b>Field Sampling</b><br>
+Operator collects sample and scans label<br>
+✔ Sampled date updated<br>
+✔ MES updated
+</li>
+
+<li>
+<b>Sample Sent to Lab</b><br>
+Lab scans sample → status becomes <b>Available</b>
+</li>
+
+<li>
+<b>Testing in Lab</b><br>
+Lab technician performs tests using instrument or manual entry
+</li>
+
+<li>
+<b>Results Entered</b><br>
+Results stored in SampleManager
+</li>
+
+<li>
+<b>Decision Making</b><br>
+System checks results:
+<ul>
+<li>On-Spec → Accept</li>
+<li>Off-Spec → Retest / Waiver / Reject</li>
+</ul>
+</li>
+
+<li>
+<b>Final Updates</b><br>
+✔ SAP updated with results and usage decision<br>
+✔ MES updated with release status<br>
+✔ Sample closed in LIMS
+</li>
+
+</ol>
+
+</div>
+
+<!-- ================= KEY CONCEPT ================= -->
+
+<div class="card decision">
+
+<h2>🎯 Key Decision Logic</h2>
+
+<table>
+<tr><th>Condition</th><th>Outcome</th></tr>
+<tr><td>All results within limits</td><td>Approved (On-Spec)</td></tr>
+<tr><td>Results outside limits</td><td>Off-Spec → Manual Review</td></tr>
+<tr><td>Supervisor approves exception</td><td>Waiver (Accepted with condition)</td></tr>
+<tr><td>Rejected</td><td>Sample/Batch blocked</td></tr>
+</table>
+
+</div>
+
+<!-- ================= SYSTEM ROLE ================= -->
+
+<div class="card integration">
+
+<h2>⚙️ System Responsibilities</h2>
+
+<table>
+<tr><th>System</th><th>Role</th></tr>
+<tr><td>SAP</td><td>Lot creation & business decision</td></tr>
+<tr><td>MES</td><td>Triggers sampling & tracks events</td></tr>
+<tr><td>SampleManager</td><td>Core system for testing & decisions</td></tr>
+</table>
+
+</div>
+
+<!-- ================= DATA FLOW ================= -->
+
+<div class="card integration">
+
+<h2>🔄 Data Flow</h2>
+
+<ul>
+<li>SAP → SampleManager (Lot Data)</li>
+<li>MES → SampleManager (Sampling Trigger)</li>
+<li>SampleManager → MES (Sample Status Updates)</li>
+<li>SampleManager → SAP (Results & Usage Decision)</li>
+</ul>
+
+</div>
+
+<!-- ================= ROLES ================= -->
+
+<div class="card">
+
+<h2>👥 User Roles</h2>
+
+<ul>
+<li><b>Field Operator</b> → Collects sample</li>
+<li><b>Lab Technician</b> → Performs testing</li>
+<li><b>QA Analyst</b> → Validates results</li>
+<li><b>Supervisor</b> → Approves waiver/decision</li>
+</ul>
+
+</div>
+
+<!-- ================= SUMMARY ================= -->
+
+<div class="card integration">
+
+<h2>📌 Final Summary</h2>
+
+<p>
+This flow ensures that every production batch is properly tested before use.
+It provides <b>full traceability, automation, and quality control</b>.
+</p>
+
+<ul>
+<li>End-to-end sample lifecycle</li>
+<li>Integration across SAP, MES, and LIMS</li>
+<li>Automated decision-making</li>
+<li>Support for exception handling (Waiver)</li>
+</ul>
+
+</div>
+
+<!-- ================= EXAMPLE ================= -->
+
+<div class="card process">
+
+<h2>💡 Example</h2>
+
+<p>
+Lot: <b>LOT1001</b><br>
+Sample: <b>SMP001</b><br>
+Test: Density<br>
+Result: 0.98 (within limit 0.95–1.05)
+</p>
+
+<p>
+✔ System marks as <b>On-Spec</b><br>
+✔ SAP updated → Approved<br>
+✔ MES updated → Released
+</p>
+
+</div>
+
+
+
+</section>
+
+
+    `,
+
+    glc_prod_order_fillblend:`
+    
+    <section>
+
+<!-- ================= DIAGRAM ================= -->
+<div class="card">
+<h2>📊 Process Flow Diagram</h2>
+<img src="img/fill-blend-1.png" class="diagram">
+<img src="img/fill-blend-2.png" class="diagram">
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="card integration">
+<h2>1. High-Level Overview</h2>
+
+<p>
+This flow represents <b>Production Order based Sampling</b> for:
+</p>
+
+<ul>
+<li><b>HE → Bulk Blending</b></li>
+<li><b>AF → Packed Filling</b></li>
+<li><b>WE / UM / EP / QC</b> → Other production events</li>
+</ul>
+
+<p>
+The system ensures that <b>samples are created, tested, and validated</b> during production,
+and final decisions are integrated back to SAP and MES.
+</p>
+
+</div>
+
+<!-- ================= THEORY ================= -->
+<div class="card process">
+<h2>2. Concept (Theory)</h2>
+
+<p>
+In production order flows, sampling is <b>triggered dynamically from MES events</b> rather than static lot-based logic.
+</p>
+
+<ul>
+<li>MES sends production event file</li>
+<li>SampleManager identifies or maps existing samples</li>
+<li>Samples are created or reused</li>
+<li>Testing and decisions follow</li>
+</ul>
+
+<p>
+Unlike TD Shipment, this flow includes <b>mapping logic using SAP Production Order data</b>.
+</p>
+
+</div>
+
+<!-- ================= FLOW ================= -->
+<div class="card process">
+<h2>3. End-to-End Flow</h2>
+
+<table>
+<tr>
+<th>Step</th>
+<th>Entity</th>
+<th>Purpose</th>
+<th>Input</th>
+<th>Output</th>
+<th>Processing</th>
+<th>SM Module</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Lot Created in SAP</td>
+<td>Create production batch</td>
+<td>Production Order</td>
+<td>Lot ID</td>
+<td>Batch creation</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Lot Downloaded</td>
+<td>Sync into LIMS</td>
+<td>Lot data</td>
+<td>LIMS record</td>
+<td>Integration</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Process Lot</td>
+<td>Initialize flow</td>
+<td>Lot</td>
+<td>Active process</td>
+<td>Workflow trigger</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Inspection Plan</td>
+<td>Assign tests</td>
+<td>Material + config</td>
+<td>Test list</td>
+<td>Auto assignment</td>
+<td>Tests</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Test Container Unknown?</td>
+<td>Validation</td>
+<td>Config</td>
+<td>Decision</td>
+<td>Check</td>
+<td>Business Rules</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>MES File Sent (WE/UM/EP/QC)</td>
+<td>Trigger sample creation</td>
+<td>Production event</td>
+<td>Sample trigger</td>
+<td>File parsing</td>
+<td>Integration Manager</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>SM Mapping Logic</td>
+<td>Find existing sample</td>
+<td>SAP fields</td>
+<td>Mapped sample</td>
+<td>Matching logic</td>
+<td>Custom Logic</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>Samples Created (Unavailable)</td>
+<td>Create new samples</td>
+<td>Inspection plan</td>
+<td>Sample ID</td>
+<td>Creation</td>
+<td>Sample Login</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Label Printing</td>
+<td>Generate barcode</td>
+<td>Sample ID</td>
+<td>Labels</td>
+<td>Print</td>
+<td>Label Module</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Field Sampling</td>
+<td>Collect samples</td>
+<td>Labels</td>
+<td>Sampled data</td>
+<td>Scan</td>
+<td>Mobile Integration</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>Sample Sent to Lab</td>
+<td>Move sample</td>
+<td>Collected sample</td>
+<td>Lab input</td>
+<td>Transfer</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Lab Processing</td>
+<td>Perform testing</td>
+<td>Sample</td>
+<td>Results</td>
+<td>Testing</td>
+<td>Lab Execution</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>Results Entry</td>
+<td>Store results</td>
+<td>Test output</td>
+<td>Stored results</td>
+<td>Manual/Auto</td>
+<td>Results Module</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>Result Type</td>
+<td>Routing logic</td>
+<td>Test config</td>
+<td>Short/Long term</td>
+<td>Decision</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>On-Spec Check</td>
+<td>Validate results</td>
+<td>Results</td>
+<td>Pass/Fail</td>
+<td>Spec comparison</td>
+<td>Specs Engine</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>Manual UD / OffSpec</td>
+<td>Handle failures</td>
+<td>Off-spec</td>
+<td>Decision</td>
+<td>Approval</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>17</td>
+<td>Waiver Decision</td>
+<td>Accept exception</td>
+<td>Supervisor input</td>
+<td>Approval</td>
+<td>Review</td>
+<td>Approval Module</td>
+</tr>
+
+<tr>
+<td>18</td>
+<td>Send Results to SAP</td>
+<td>Update ERP</td>
+<td>Final results</td>
+<td>SAP updated</td>
+<td>Integration</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>19</td>
+<td>Release Date Update</td>
+<td>Close process</td>
+<td>Approval</td>
+<td>Status update</td>
+<td>Finalization</td>
+<td>Workflow</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- ================= MAPPING ================= -->
+<div class="card decision">
+<h2>4. Mapping Logic (VERY IMPORTANT)</h2>
+
+<p>This is the key difference in this flow:</p>
+
+<ul>
+<li>UM → Map using Storage Location + Batch</li>
+<li>EP → Map using Purchase Doc + Delivery</li>
+<li>WE → Based on Storage Location logic</li>
+<li>QC → Map using Material + Batch</li>
+</ul>
+
+<p>
+If mapping fails → system creates new sample.
+</p>
+
+</div>
+
+<!-- ================= DATA FLOW ================= -->
+<div class="card integration">
+<h2>5. Data Flow</h2>
+
+<ul>
+<li>SAP → SampleManager (Production Order)</li>
+<li>MES → SampleManager (Trigger File)</li>
+<li>SampleManager → SAP (Results)</li>
+<li>SampleManager → MES (Status Updates)</li>
+</ul>
+</div>
+
+<!-- ================= ROLES ================= -->
+<div class="card">
+<h2>6. User Roles</h2>
+
+<ul>
+<li>Operator → Sampling</li>
+<li>Lab Technician → Testing</li>
+<li>QA → Validation</li>
+<li>Supervisor → Decision</li>
+</ul>
+
+</div>
+
+<!-- ================= ERRORS ================= -->
+<div class="card">
+<h2>7. Errors & Validations</h2>
+
+<ul>
+<li>Mapping failure → New sample created</li>
+<li>Missing SAP data → Process blocked</li>
+<li>Off-spec → Manual review required</li>
+<li>Integration failure → Retry logic</li>
+</ul>
+
+</div>
+
+<!-- ================= SUMMARY ================= -->
+<div class="card integration">
+<h2>8. Summary</h2>
+
+<p>
+This flow handles <b>production-driven sampling</b> where samples are dynamically created or mapped
+based on MES triggers and SAP production data.
+</p>
+
+<ul>
+<li>Dynamic sample mapping</li>
+<li>Real-time production integration</li>
+<li>Advanced decision handling</li>
+<li>Full traceability</li>
+</ul>
+
+</div>
+
+</section>
+
+    
+    `,
+
 
     installation: `
       <h2 class="text-2xl font-bold mb-3">Installation & Configuration</h2>
