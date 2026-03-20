@@ -118,6 +118,12 @@ td {
       </li>
 
 
+      <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('glc_others')">
+        🔗 GLC Others
+      </li>
+
+      
+
       <li class="hover:bg-gray-700 p-3 rounded cursor-pointer" onclick="loadContent('installation')">
         ⚙️ Installation & Configuration
       </li>
@@ -3732,6 +3738,329 @@ based on MES triggers and SAP production data.
     
     `,
 
+
+    glc_others : `
+    
+    <section>
+
+<!-- ================= DIAGRAM ================= -->
+<div class="card">
+<h2>📊 Process Flow Diagram</h2>
+<img src="others-flow-1.png" class="diagram">
+<img src="others-flow-2.png" class="diagram">
+</div>
+
+<!-- ================= OVERVIEW ================= -->
+<div class="card integration">
+<h2>1. High-Level Overview</h2>
+
+<p>
+This flow represents <b>GLC “Other” processes</b>:
+</p>
+
+<ul>
+<li><b>WE</b> → Packed / Bulk Inbound</li>
+<li><b>UM</b> → Tank Transfer</li>
+<li><b>EP</b> → Vessel Unloading</li>
+<li><b>QC</b> → Quality Check</li>
+</ul>
+
+<p>
+Unlike TD Shipment or Production Order flows, this process focuses on 
+<b>dynamic sample mapping using SAP transactional data</b> (Delivery, Purchase Docs, Storage Location).
+</p>
+
+</div>
+
+<!-- ================= THEORY ================= -->
+<div class="card process">
+<h2>2. Concept (Theory)</h2>
+
+<p>
+This flow is driven by <b>MES-triggered events</b>, but instead of always creating new samples:
+</p>
+
+<ul>
+<li>System tries to <b>find existing samples (SMIDI samples)</b></li>
+<li>If found → reuse sample</li>
+<li>If not → create new sample</li>
+</ul>
+
+<p>
+This ensures <b>no duplicate samples</b> and proper mapping to SAP logistics data.
+</p>
+
+</div>
+
+<!-- ================= FLOW ================= -->
+<div class="card process">
+<h2>3. End-to-End Flow</h2>
+
+<table>
+<tr>
+<th>Step</th>
+<th>Entity</th>
+<th>Purpose</th>
+<th>Input</th>
+<th>Output</th>
+<th>Processing</th>
+<th>SampleManager Module</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Lot Created in SAP</td>
+<td>Create batch</td>
+<td>SAP data</td>
+<td>Lot ID</td>
+<td>ERP creation</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Lot Downloaded in SM</td>
+<td>Sync data</td>
+<td>Lot ID</td>
+<td>LIMS record</td>
+<td>Integration</td>
+<td>Integration</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Process Lot</td>
+<td>Initialize workflow</td>
+<td>Lot</td>
+<td>Active process</td>
+<td>Trigger</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Inspection Plan</td>
+<td>Assign tests</td>
+<td>Material</td>
+<td>Test list</td>
+<td>Auto config</td>
+<td>Tests</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Test Container Unknown?</td>
+<td>Validation</td>
+<td>Config</td>
+<td>Yes/No</td>
+<td>Check</td>
+<td>Business Rules</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>MES File Sent</td>
+<td>Trigger sampling</td>
+<td>WE/UM/EP/QC file</td>
+<td>Sample request</td>
+<td>Parse</td>
+<td>Integration Manager</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>SM Receives & Mapping Logic</td>
+<td>Find existing sample</td>
+<td>SAP data</td>
+<td>Mapped sample</td>
+<td>Matching rules</td>
+<td>Custom Logic</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>Samples Created (if not found)</td>
+<td>Create new samples</td>
+<td>Inspection plan</td>
+<td>Sample ID</td>
+<td>Create</td>
+<td>Sample Login</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Label Printing</td>
+<td>Generate labels</td>
+<td>Sample ID</td>
+<td>Labels</td>
+<td>Print</td>
+<td>Label Module</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Field Sampling</td>
+<td>Collect samples</td>
+<td>Labels</td>
+<td>Sampled data</td>
+<td>Scan</td>
+<td>Mobile Integration</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>Sample Sent to Lab</td>
+<td>Transfer</td>
+<td>Sample</td>
+<td>Lab input</td>
+<td>Movement</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Lab Processing</td>
+<td>Testing</td>
+<td>Sample</td>
+<td>Results</td>
+<td>Execution</td>
+<td>Lab Execution</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>Results Entry</td>
+<td>Store results</td>
+<td>Test output</td>
+<td>Results</td>
+<td>Manual/Auto</td>
+<td>Results Module</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>Decision Logic</td>
+<td>Validate results</td>
+<td>Results</td>
+<td>Decision</td>
+<td>Spec check</td>
+<td>Specs Engine</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>Waiver / OffSpec</td>
+<td>Handle failures</td>
+<td>Off-spec</td>
+<td>Approval</td>
+<td>Manual decision</td>
+<td>Workflow</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>Send Results to SAP</td>
+<td>Update ERP</td>
+<td>Final results</td>
+<td>SAP updated</td>
+<td>Integration</td>
+<td>SM-IDI</td>
+</tr>
+
+<tr>
+<td>17</td>
+<td>Release Update</td>
+<td>Finalize process</td>
+<td>Approval</td>
+<td>Status</td>
+<td>Close</td>
+<td>Workflow</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- ================= MAPPING ================= -->
+<div class="card decision">
+<h2>4. Mapping Logic (CRITICAL)</h2>
+
+<ul>
+<li><b>UM:</b> Storage Location + Batch + Quantity</li>
+<li><b>EP:</b> Purchase Doc + Delivery Number + Item</li>
+<li><b>WE:</b> Storage Location based logic</li>
+<li><b>QC:</b> Material + Batch</li>
+</ul>
+
+<p>
+✔ If match found → reuse sample  
+<br>
+❌ If no match → create new sample
+</p>
+
+</div>
+
+<!-- ================= DATA FLOW ================= -->
+<div class="card integration">
+<h2>5. Data Flow</h2>
+
+<ul>
+<li>SAP → SampleManager (Lot + logistics data)</li>
+<li>MES → SampleManager (Trigger events)</li>
+<li>SampleManager → SAP (Results + decisions)</li>
+<li>SampleManager → MES (Sample status)</li>
+</ul>
+
+</div>
+
+<!-- ================= ROLES ================= -->
+<div class="card">
+<h2>6. User Roles</h2>
+
+<ul>
+<li>Operator → Sampling</li>
+<li>Lab Technician → Testing</li>
+<li>QA → Validation</li>
+<li>Supervisor → Approval</li>
+</ul>
+
+</div>
+
+<!-- ================= ERRORS ================= -->
+<div class="card">
+<h2>7. Validation & Errors</h2>
+
+<ul>
+<li>Mapping failure → duplicate prevention logic</li>
+<li>Missing SAP data → cannot map</li>
+<li>Off-spec → manual decision</li>
+<li>Integration failure → retry/logging</li>
+</ul>
+
+</div>
+
+<!-- ================= SUMMARY ================= -->
+<div class="card integration">
+<h2>8. Summary</h2>
+
+<p>
+This flow is designed for <b>logistics-driven sampling</b> where sample creation depends on
+real-time SAP transactional data.
+</p>
+
+<ul>
+<li>Dynamic sample reuse</li>
+<li>Prevents duplicate samples</li>
+<li>Strong SAP integration</li>
+<li>Flexible mapping logic</li>
+</ul>
+
+</div>
+
+</section>
+
+    
+    `,
 
     installation: `
       <h2 class="text-2xl font-bold mb-3">Installation & Configuration</h2>
